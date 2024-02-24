@@ -1,0 +1,59 @@
+.main-body {
+  max-width: 1348px;
+  padding: 10px;
+  
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+mat-card mat-card-header mat-card-title {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+
+mat-card mat-card-actions button {
+  margin: 5px;
+  width: 80px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #696969;
+    padding-bottom: 10px;
+    display: block;
+  }
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+
+
+
+.child-1{
+  background-color: orange;
+  }
+  .child-2{
+  background-color: yellow;
+  }
+  .child-3{
+  background-color: green;
+  }
+  
+  .container{
+   margin: 15px;
+   height:200px;
+   border:2px solid red;
+  }

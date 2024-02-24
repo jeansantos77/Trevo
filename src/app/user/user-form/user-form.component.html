@@ -1,0 +1,93 @@
+
+<div class="main-body">
+  <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>User Registration</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
+          <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+            <label>Full Name</label>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="First name" formControlName="firstName">
+              @if (addressForm.controls['firstName'].hasError('required')) {
+              <mat-error>First name is <strong>required</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+          
+          <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+            <label>Email</label>
+            <mat-form-field appearance="outline">
+              <input type="email" matInput placeholder="Last name" formControlName="lastName">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
+          <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+            <label>User</label>
+            <mat-form-field appearance="outline">
+              <input matInput placeholder="First name" formControlName="firstName">
+              @if (addressForm.controls['firstName'].hasError('required')) {
+              <mat-error>First name is <strong>required</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+          
+          <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+            <label>Password</label>
+            <mat-form-field appearance="outline">
+              <input type="password" matInput placeholder="Last name" formControlName="lastName">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
+          <div class="col" fxFlex="49" fxFlex.sm="96" fxFlex.xs="98">
+            <label>Profile</label>
+            <mat-form-field appearance="outline">
+              <mat-select placeholder="State" formControlName="state">
+                @for (state of states; track state) {
+                <mat-option [value]="state.abbreviation">{{ state.name }}</mat-option>
+                }
+              </mat-select>
+              @if (addressForm.controls['state'].hasError('required')) {
+              <mat-error>State is <strong>required</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="col" fxFlex="49" fxFlex.sm="98" fxFlex.xs="98">
+            <label>Situation</label>
+            <mat-form-field appearance="outline">
+              <mat-select placeholder="State" formControlName="state">
+                @for (state of states; track state) {
+                <mat-option [value]="state.abbreviation">{{ state.name }}</mat-option>
+                }
+              </mat-select>
+              @if (addressForm.controls['state'].hasError('required')) {
+              <mat-error>State is <strong>required</strong></mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button type="button" matTooltip="Cancel User changes">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" matTooltip="Save User changes">Save</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>
+
+
+<!--
+<div class="container">
+  <div class="flex-container" fxLayout="row wrap" fxLayoutGap="20px" fxLayoutAlign="<main-axis> <cross-axis>">
+    <mat-card class="child-1">1. One</mat-card> 
+    <mat-card class="child-2">2. Two</mat-card> 
+    <mat-card class="child-3">3. Three</mat-card>
+  </div>
+  </div>-->

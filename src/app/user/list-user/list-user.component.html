@@ -1,0 +1,75 @@
+<div class="main-body">
+
+  <mat-card>
+    <mat-card-header>
+      Users Registration</mat-card-header>
+    <mat-card-content>
+
+      <div class="filter" fxLayout="row" fxLayoutAlign="end">
+        <mat-form-field style="background-color: #F5F5F5;color:#808080; height: 55px;" appearance="outline">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>
+        <button matTooltip="Create a new User" mat-raised-button>
+          <mat-icon>add</mat-icon>
+          New User
+        </button>
+      </div>
+
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Full Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> User Login </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Mail </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Profile </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef style="width: 13%;">Action</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button matTooltip="Edit User" style="color: #58585A" (click)="openEditForm(row)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Delete User" style="color: #FA8072" (click)="deleteEmployee(row.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <br>
+
+
+      </div>
+    </mat-card-content>
+    <mat-card-footer>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </mat-card-footer>
+  </mat-card>
+</div>
