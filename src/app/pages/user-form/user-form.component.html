@@ -45,7 +45,7 @@
         </div>
 
         <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
-          <div class="col" fxFlex="49" fxFlex.sm="96" fxFlex.xs="98">
+          <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Profile</label>
             <mat-form-field appearance="outline">
               <mat-select placeholder="State" formControlName="state">
@@ -58,7 +58,7 @@
               }
             </mat-form-field>
           </div>
-          <div class="col" fxFlex="49" fxFlex.sm="98" fxFlex.xs="98">
+          <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Situation</label>
             <mat-form-field appearance="outline">
               <mat-select placeholder="State" formControlName="state">
@@ -75,7 +75,7 @@
 
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button type="button" matTooltip="Cancel User changes">Cancel</button>
+        <button routerLink="{{listPage}}" mat-raised-button type="button" matTooltip="Cancel User changes">Cancel</button>
         <button mat-raised-button color="primary" type="submit" matTooltip="Save User changes">Save</button>
       </mat-card-actions>
     </mat-card>

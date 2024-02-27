@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-list-user',
@@ -22,7 +23,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatInputModule,
     FlexLayoutModule,
-    MatTooltipModule
+    MatTooltipModule,
+    RouterLink,
 
   ],
   templateUrl: './list-user.component.html',
@@ -31,6 +33,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 export class ListUserComponent implements AfterViewInit {
+
+  createPage: string = "/user-form"
+
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'action'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 

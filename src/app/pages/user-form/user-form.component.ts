@@ -8,6 +8,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user-form',
@@ -22,10 +24,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatCardModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatTooltipModule
+    MatTooltipModule,
+    RouterLink
+    
   ]
 })
 export class UserFormComponent {
+  constructor(private _snackBar: MatSnackBar) {}
+
+  listPage: string = "/list-user"
+
   private fb = inject(FormBuilder);
   addressForm = this.fb.group({
     company: null,
@@ -50,6 +58,10 @@ export class UserFormComponent {
   ];
 
   onSubmit(): void {
-    alert('Thanks!');
+    this._snackBar.open('Usuário salvo com sucesso! ', 'Fechar', {
+      duration: 3000,
+      horizontalPosition: 'center', // Ajustado para canto superior direito
+      verticalPosition: 'top'
+    });
   }
 }

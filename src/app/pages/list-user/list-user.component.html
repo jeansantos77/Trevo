@@ -10,7 +10,7 @@
           <mat-icon matPrefix>search</mat-icon>
           <input matInput (keyup)="applyFilter($event)" #input>
         </mat-form-field>
-        <button matTooltip="Create a new User" mat-raised-button>
+        <button routerLink="{{createPage}}" matTooltip="Create a new User" mat-raised-button >
           <mat-icon>add</mat-icon>
           New User
         </button>
