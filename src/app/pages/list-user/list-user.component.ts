@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -10,6 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationComponent } from '../../shared/delete-confirmation/delete-confirmation.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-user',
@@ -33,13 +36,16 @@ import { RouterLink } from '@angular/router';
 
 
 export class ListUserComponent implements AfterViewInit {
+  _liveAnnouncer= inject(LiveAnnouncer)
+  _dialog= inject( MatDialog)
+  _toastr = inject(ToastrService)
 
+  formName: string = "Usuário"
+  buttonTooltip: string = "Cria um novo " + this.formName  
   createPage: string = "/user-form"
 
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'action'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -47,6 +53,13 @@ export class ListUserComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.paginator._intl.itemsPerPageLabel = 'Itens por página';
+    this.paginator._intl.firstPageLabel = 'Primeira';
+    this.paginator._intl.previousPageLabel = 'Anterior';
+    this.paginator._intl.nextPageLabel = 'Próxima';
+    this.paginator._intl.lastPageLabel = 'Última';
+
   }
 
   announceSortChange(sortState: Sort) {
@@ -75,19 +88,22 @@ export class ListUserComponent implements AfterViewInit {
       },
     });*/
 
-    console.log('Valor de algumaVariavel:');
   }
 
-  deleteEmployee(id: number) {
-    /*this._empService.deleteEmployee(id).subscribe({
-      next: (res) => {
-        this._coreService.openSnackBar('Employee deleted!', 'done');
-        this.getEmployeeList();
-      },
-      error: console.log,
-    });*/
+  openDeleteConfirmation(id: number): void {
+    const dialogRef = this._dialog.open(DeleteConfirmationComponent, {
+      height: '180px',
+      width: '300px',
+      data: { id: id }
+    });
 
-    console.log('Valor de algumaVariavel: delete');
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Lógica para deletar o registro
+
+        this._toastr.success(this.formName + ' excluído com sucesso!');
+      }
+    });
   }
 
   applyFilter(event: Event) {

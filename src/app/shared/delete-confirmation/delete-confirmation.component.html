@@ -1,0 +1,21 @@
+
+<div  fxLayout="column" fxLayoutAlign="center center" > 
+
+  <div>
+    <h3 mat-dialog-title>Exclusão</h3>
+  </div>
+    
+
+    <div mat-dialog-content style="height: 70px;">
+      <p>Confirma exclusão?</p>
+    </div>
+
+    <div mat-dialog-actions fxLayoutGap="10px">
+      <button mat-raised-button (click)="onNoClick()">Cancelar</button>
+      <button mat-raised-button color="warn" (click)="onYesClick()">Confirmar</button>
+      
+    </div>
+</div>
+
+
+

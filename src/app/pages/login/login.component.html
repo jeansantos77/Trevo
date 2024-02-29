@@ -1,3 +1,25 @@
-<p>login works!</p>
+<div fxLayoutAlign="center center" fxFlexFill >
+    <mat-card  fxFlex.xl="25" fxFlex.lg="40" fxFlex.md="50" fxFlex.sm="70" fxFlex.xs="80">
+        <div class="logo" color="primary">
+            <img src="./assets/logo.png" alt="LTA-RH">
+        </div>
+        <div>
+            <form fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+                <mat-form-field>
+                    <input matInput placeholder="Usuário">
+                </mat-form-field>
 
-<button routerLink="menu" mat-raised-button type="button">login</button>
+                <mat-form-field>
+                    <!--<input matInput type="password" placeholder="Senha"><mat-icon matSuffix>visibility_off</mat-icon>-->
+
+                    <input matInput type="{{ showPassword ? 'text' : 'password' }}" placeholder="Senha">
+                        <mat-icon (click)="togglePasswordVisibility()" matSuffix>
+                            {{ showPassword ? 'visibility_off' : 'visibility' }}
+                        </mat-icon>
+                </mat-form-field>
+                <button mat-raised-button color="primary">Login</button>
+                <a href="#">Esqueci a senha</a>
+            </form>
+        </div>
+    </mat-card>
+</div>

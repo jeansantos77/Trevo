@@ -7,9 +7,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { RouterLink } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-form',
@@ -24,15 +24,17 @@ import { RouterLink } from '@angular/router';
     MatCardModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatTooltipModule,
-    RouterLink
-    
+    RouterLink,
+    MatFormFieldModule,
   ]
 })
 export class UserFormComponent {
-  constructor(private _snackBar: MatSnackBar) {}
 
+  private _toastr = inject(ToastrService)
+
+  formName: string = "Usuário"
   listPage: string = "/list-user"
+
 
   private fb = inject(FormBuilder);
   addressForm = this.fb.group({
@@ -58,10 +60,8 @@ export class UserFormComponent {
   ];
 
   onSubmit(): void {
-    this._snackBar.open('Usuário salvo com sucesso! ', 'Fechar', {
-      duration: 3000,
-      horizontalPosition: 'center', // Ajustado para canto superior direito
-      verticalPosition: 'top'
-    });
+
+    this._toastr.success(this.formName + ' salvo com sucesso!');
   }
+
 }
