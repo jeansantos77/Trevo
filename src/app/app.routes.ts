@@ -6,6 +6,7 @@ import { LoginComponent } from './pages/login/login.component';
 export const routes: Routes = [
     { path: 'list-user', component: ListUserComponent},
     { path: 'user-form', component: UserFormComponent},
+    { path: 'user-form/:id', component: UserFormComponent},
     { path: 'login', component: LoginComponent},
     { path: '', redirectTo: 'list-user', pathMatch: 'full'}, 
     { path: '**', redirectTo: 'list-user', pathMatch: 'full'}, 

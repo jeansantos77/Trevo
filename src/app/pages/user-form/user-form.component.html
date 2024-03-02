@@ -1,77 +1,104 @@
-
 <div class="main-body">
-  <form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+  <form [formGroup]="entityForm" novalidate (ngSubmit)="Save()">
     <mat-card>
       <mat-card-header>
         <mat-card-title>{{formName}}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
+        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+          fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
+
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-            <label>Full Name</label>
+            <label>Nome</label>
             <mat-form-field appearance="outline">
-              <input matInput placeholder="First name" formControlName="firstName">
-              @if (addressForm.controls['firstName'].hasError('required')) {
-              <mat-error>First name is <strong>required</strong></mat-error>
+              <input matInput placeholder="Nome" formControlName="name">
+              @if (entityForm.controls['name'].hasError('required')) {
+              <mat-error><strong>{{requiredMessage}}</strong></mat-error>
               }
             </mat-form-field>
           </div>
-          
+
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Email</label>
             <mat-form-field appearance="outline">
-              <input type="email" matInput placeholder="Last name" formControlName="lastName">
+              <input type="email" matInput placeholder="Email" formControlName="email">
+              @if (entityForm.controls['email'].hasError('required')) {
+              <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+              }
+
+              @if (entityForm.controls['email'].hasError('email')) {
+              <mat-error><strong>Email inválido</strong></mat-error>
+              }
+
             </mat-form-field>
           </div>
         </div>
 
-        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
+        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+          fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-            <label>User</label>
+            <label>Login</label>
             <mat-form-field appearance="outline">
-              <input matInput placeholder="First name" formControlName="firstName">
-              @if (addressForm.controls['firstName'].hasError('required')) {
-              <mat-error>First name is <strong>required</strong></mat-error>
+              <input matInput placeholder="Login" formControlName="login">
+              @if (entityForm.controls['login'].hasError('required')) {
+              <mat-error><strong>{{requiredMessage}}</strong></mat-error>
               }
             </mat-form-field>
           </div>
-          
+
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-            <label>Password</label>
+            <label>Senha</label>
             <mat-form-field appearance="outline">
-              <input type="password" matInput placeholder="Last name" formControlName="lastName">
+
+              <input matInput type="{{ showPassword ? 'text' : 'password' }}" placeholder="Senha"
+                formControlName="password">
+              <mat-icon (click)="togglePasswordVisibility()" matSuffix>
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+              </mat-icon>
+
+              @if (entityForm.controls['password'].hasError('required')) {
+              <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+              }
             </mat-form-field>
           </div>
         </div>
 
-        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
+        <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+          fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-            <label>Profile</label>
+            <label>Perfil</label>
             <mat-form-field appearance="outline">
-              <mat-select placeholder="State" formControlName="state">
-                @for (state of states; track state) {
-                <mat-option [value]="state.abbreviation">{{ state.name }}</mat-option>
+              <mat-select formControlName="profile">
+                @for (profile of profiles; track profile) {
+                <mat-option [value]="profile.value">{{ profile.name }}</mat-option>
                 }
               </mat-select>
-              @if (addressForm.controls['state'].hasError('required')) {
-              <mat-error>State is <strong>required</strong></mat-error>
+
+              @if (entityForm.controls['profile'].hasError('required')) {
+              <mat-error><strong>{{requiredMessage}}</strong></mat-error>
               }
+
             </mat-form-field>
           </div>
+
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-            <label>Situation</label>
+            <label>Situação</label>
+
             <mat-form-field appearance="outline">
-              <mat-select placeholder="State" formControlName="state">
-                @for (state of states; track state) {
-                <mat-option [value]="state.abbreviation">{{ state.name }}</mat-option>
+              <mat-select value=1 formControlName="situation">
+
+                @for (situation of situations; track situation) {
+                <mat-option [value]="situation.value">{{ situation.description }}</mat-option>
                 }
+
               </mat-select>
-              @if (addressForm.controls['state'].hasError('required')) {
-              <mat-error>State is <strong>required</strong></mat-error>
-              }
             </mat-form-field>
+
+
           </div>
         </div>
+
+
 
       </mat-card-content>
       <mat-card-actions>

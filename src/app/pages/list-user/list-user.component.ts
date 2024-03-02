@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -9,10 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
+import { IUser } from '../../interfaces/IUser';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-list-user',
@@ -35,22 +37,36 @@ import { ToastrService } from 'ngx-toastr';
 })
 
 
-export class ListUserComponent implements AfterViewInit {
-  _liveAnnouncer= inject(LiveAnnouncer)
-  _dialog= inject( MatDialog)
-  _toastr = inject(ToastrService)
+export class ListUserComponent implements OnInit, AfterViewInit {
+  _liveAnnouncer= inject(LiveAnnouncer);
+  _dialog= inject( MatDialog);
+  _toastr = inject(ToastrService);
+  _userService = inject(UserService);
+  _router = inject(Router);
 
-  formName: string = "Usuário"
-  buttonTooltip: string = "Cria um novo " + this.formName  
-  createPage: string = "/user-form"
+  formName: string = "Usuário";
+  buttonTooltip: string = "Cria um novo " + this.formName;
+  createPage: string = "/user-form";
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'action'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  _userList : IUser [] = [];
+
+  displayedColumns: string[] = ['id', 'name', 'login', 'email', 'profile', 'situation', 'action'];
+  dataSource = new MatTableDataSource<IUser>(this._userList);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  ngOnInit() {
+    /*this._userService.getAll().subscribe(data => {
+      this._userList = data;  
+    })*/
+
+    this._userList = this._userService.getAll()
+
+  }
+
   ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource<IUser>(this._userList);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -74,7 +90,9 @@ export class ListUserComponent implements AfterViewInit {
     }
   }
 
-  openEditForm(data: any) {
+  Edit(id: number) {
+    this._router.navigateByUrl("/user-form/" + id);
+    
     /*const dialogRef = this._dialog.open(UsuariosComponent, {
       width: '1300px',
       data,
@@ -99,9 +117,13 @@ export class ListUserComponent implements AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Lógica para deletar o registro
+        //this._userService.delete(id).subscribe(() => {
+          this._toastr.success(this.formName + ' excluído com sucesso!');
+          this._userList = this._userList.filter(x => x.id != id);
+          this.dataSource = new MatTableDataSource<IUser>(this._userList);
+        //})
 
-        this._toastr.success(this.formName + ' excluído com sucesso!');
+        
       }
     });
   }
@@ -115,45 +137,22 @@ export class ListUserComponent implements AfterViewInit {
     }
   }
 
+  getProfile(profile : number) {
+    let profileDescription = "Administrator";
+
+    if (profile == 2)
+    {
+      profileDescription = "User";
+    }
+    else if (profile == 3)
+    {
+      profileDescription = "Viewer";
+    }
+
+    return profileDescription;
+    
+  }
+
 }
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'x Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 12, name: 'x Helium', weight: 4.0026, symbol: 'He'},
-  {position: 13, name: 'x Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 14, name: 'y Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 15, name: 'y Boron', weight: 10.811, symbol: 'B'},
-  {position: 16, name: 'y Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 17, name: 'y Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 18, name: 'y Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 19, name: 'y Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 20, name: 'y Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 21, name: 'a Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 22, name: 'a Helium', weight: 4.0026, symbol: 'He'},
-  {position: 23, name: 'a Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 24, name: 'a Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 25, name: 'a Boron', weight: 10.811, symbol: 'B'},
-  {position: 26, name: 'a Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 27, name: 'a Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 28, name: 'a Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 29, name: 'a Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 30, name: 'a Neon', weight: 20.1797, symbol: 'Ne'},
-
-];

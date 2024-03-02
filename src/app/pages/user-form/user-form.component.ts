@@ -7,9 +7,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
+import { MatIconModule } from '@angular/material/icon';
+import { UserService } from '../../services/user.service';
+import { IUser } from '../../interfaces/IUser';
 
 @Component({
   selector: 'app-user-form',
@@ -26,42 +29,125 @@ import { ToastrService } from 'ngx-toastr';
     FlexLayoutModule,
     RouterLink,
     MatFormFieldModule,
+    MatIconModule
   ]
 })
 export class UserFormComponent {
 
   private _toastr = inject(ToastrService)
+  private _router = inject(Router)
+  private _route = inject(ActivatedRoute)
+  private _userService = inject(UserService);
 
   formName: string = "Usuário"
   listPage: string = "/list-user"
-
+  requiredMessage: string = "Campo obrigatório"
 
   private fb = inject(FormBuilder);
-  addressForm = this.fb.group({
-    company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    state: [null, Validators.required],
+  entityForm = this.fb.group({
+    name: [null, Validators.required],
+    email: [null, [Validators.required, Validators.email]],
+    login: [null, Validators.required],
+    password: [null, Validators.required],
+    profile: [1, Validators.required],
+    situation: 1
+
+
+
+    
+    
+    /*state: [null, Validators.required],
     postalCode: [null, Validators.compose([
       Validators.required, Validators.minLength(5), Validators.maxLength(5)])
     ],
-    shipping: ['free', Validators.required]
+    shipping: ['free', Validators.required]*/
   });
 
-  hasUnitNumber = false;
-
-  states = [
-    {name: 'Alabama', abbreviation: 'AL'},
-    {name: 'Alaska', abbreviation: 'AK'},
-    {name: 'American Samoa', abbreviation: 'AS'},
+  profiles = [
+    {name: 'Administrator', value: 1},
+    {name: 'User', value: 2},
+    {name: 'Viewer', value: 3}
   ];
 
-  onSubmit(): void {
+  defaultProfile= 1;
 
-    this._toastr.success(this.formName + ' salvo com sucesso!');
+  situations = [
+    {description: 'Ativo', value: 1},
+    {description: 'Inativo', value: 0}
+  ];
+
+  defaultSituation = 1
+
+  entityId! : number;
+
+  ngOnInit() {
+    this.entityId = this._route.snapshot.params['id'];
+    
+    if (this.entityId)
+    {
+      /*this._userService.getById(id).subscribe(data => {
+        this.entityForm.patchValue(data);
+      })*/
+
+
+         //this.entityForm.controls.email.disable();
+
+
+    }
+    
+  }
+
+  Save(): void {
+
+    if (this.entityForm.valid)
+    {
+
+      const entity: IUser = {
+        id: this.entityId,
+        name : this.entityForm.value.name!,
+        login: this.entityForm.value.login!,
+        email : this.entityForm.value.email!,
+        password: this.entityForm.value.password!,
+        profile: this.entityForm.value.profile!,
+        situation: this.entityForm.value.situation!,
+        updatedBy: "usuário que alterou",
+        updatedAt: new Date()
+      }
+
+      if (this.entityId > 0)
+      {
+
+
+        //this._userService.update(entity).subscribe(() => {
+
+          this._toastr.success(this.formName + ' alterado com sucesso!');
+        //})
+
+      }
+      else
+      {
+        entity.createdBy = "usuário que criou";
+        entity.createdAt = new Date();
+
+        //this._userService.add(entity).subscribe(() => {
+
+        //  this._toastr.success(this.formName + ' salvo com sucesso!');
+          this._router.navigateByUrl("/list-user");
+        //})
+      }
+
+      this._router.navigateByUrl("/list-user"); 
+  
+      
+    }
+
+
+  }
+
+  showPassword: boolean = false;
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
 }
