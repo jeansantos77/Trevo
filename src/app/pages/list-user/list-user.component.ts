@@ -13,7 +13,7 @@ import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 
 @Component({

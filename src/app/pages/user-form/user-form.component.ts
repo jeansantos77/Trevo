@@ -12,7 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
-import { IUser } from '../../interfaces/IUser';
+import { IUser } from '../../interfaces/user';
 
 @Component({
   selector: 'app-user-form',

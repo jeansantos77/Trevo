@@ -12,6 +12,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
+import { AuthService } from './services/auth.service';
+import { environment } from '../environments/environment';
 
 
 @Component({
@@ -34,10 +36,11 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class AppComponent implements DoCheck {
   title = 'LTA';
+  env: string = environment.production ? 'Produção' : 'Desenvolvimento';
 
   isLogged: boolean = false;
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private authService: AuthService){}
 
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -47,15 +50,18 @@ export class AppComponent implements DoCheck {
       shareReplay()
     );
 
-
   ngDoCheck(): void {
+
     let currentURL = this.router.url;
 
-    if (currentURL==='/login') {
-      this.isLogged = false;
-    } else {
-      this.isLogged = true;
-    }
+    if (currentURL==='/login')
+      this.authService.logout();
+
+    this.isLogged = this.authService.isLoggedIn();
+  }
+
+  getUserName(){
+    return this.authService.getUserName()
   }
 
 }

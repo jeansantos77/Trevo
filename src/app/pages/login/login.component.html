@@ -4,15 +4,15 @@
             <img src="./assets/logo.png" alt="LTA-RH">
         </div>
         <div>
-            <form fxLayoutAlign="stretch" fxLayout="column" class="login-form">
+            <form fxLayoutAlign="stretch" fxLayout="column" class="login-form" [formGroup]="form" (ngSubmit)="login()">
                 <mat-form-field>
-                    <input matInput placeholder="Usuário">
+                    <input matInput placeholder="Usuário" formControlName="login">
                 </mat-form-field>
 
                 <mat-form-field>
                     <!--<input matInput type="password" placeholder="Senha"><mat-icon matSuffix>visibility_off</mat-icon>-->
 
-                    <input matInput type="{{ showPassword ? 'text' : 'password' }}" placeholder="Senha">
+                    <input matInput type="{{ showPassword ? 'text' : 'password' }}" placeholder="Senha" formControlName="password">
                         <mat-icon (click)="togglePasswordVisibility()" matSuffix>
                             {{ showPassword ? 'visibility_off' : 'visibility' }}
                         </mat-icon>
