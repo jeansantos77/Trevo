@@ -61,7 +61,7 @@ export class AppComponent implements DoCheck {
   }
 
   getUserName(){
-    return this.authService.getUserName()
+    return this.authService.getUserLogged()
   }
 
 }

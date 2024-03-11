@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
 import { IUser } from '../../interfaces/user';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-form',
@@ -34,10 +35,11 @@ import { IUser } from '../../interfaces/user';
 })
 export class UserFormComponent {
 
-  private _toastr = inject(ToastrService)
-  private _router = inject(Router)
-  private _route = inject(ActivatedRoute)
-  private _userService = inject(UserService);
+  private toastr = inject(ToastrService)
+  private router = inject(Router)
+  private route = inject(ActivatedRoute)
+  private userService = inject(UserService);
+  private authService = inject(AuthService);
 
   formName: string = "Usuário"
   listPage: string = "/list-user"
@@ -54,8 +56,6 @@ export class UserFormComponent {
 
 
 
-    
-    
     /*state: [null, Validators.required],
     postalCode: [null, Validators.compose([
       Validators.required, Validators.minLength(5), Validators.maxLength(5)])
@@ -64,84 +64,89 @@ export class UserFormComponent {
   });
 
   profiles = [
-    {name: 'Administrator', value: 1},
-    {name: 'User', value: 2},
-    {name: 'Viewer', value: 3}
+    { name: 'Administrator', value: 1 },
+    { name: 'User', value: 2 },
+    { name: 'Viewer', value: 3 }
   ];
 
-  defaultProfile= 1;
+  defaultProfile = 1;
 
   situations = [
-    {description: 'Ativo', value: 1},
-    {description: 'Inativo', value: 0}
+    { description: 'Ativo', value: 1 },
+    { description: 'Inativo', value: 0 }
   ];
 
   defaultSituation = 1
 
-  entityId! : number;
+  entityId!: number;
 
   ngOnInit() {
-    this.entityId = this._route.snapshot.params['id'];
-    
-    if (this.entityId)
-    {
-      /*this._userService.getById(id).subscribe(data => {
-        this.entityForm.patchValue(data);
-      })*/
+    this.entityId = this.route.snapshot.params['id'];
 
+    if (this.entityId) {
+      this.userService.getById(this.entityId).subscribe((data: any) => {
 
-         //this.entityForm.controls.email.disable();
+        if (data != null) {
+          this.entityForm.controls['name'].setValue(data.name);
+          this.entityForm.controls['email'].setValue(data.email);
+          this.entityForm.controls['login'].setValue(data.login);
+          this.entityForm.controls['password'].setValue(data.password);
+          this.entityForm.controls['profile'].setValue(data.profile);
+          this.entityForm.controls['situation'].setValue(data.situation);
+        }
+      },
+        (error: any) => {
+          this.toastr.error(error.error)
+        });
 
-
+      //this.entityForm.controls.email.disable();
     }
-    
+
   }
 
   Save(): void {
 
-    if (this.entityForm.valid)
-    {
+    let userLogged = this.authService.getUserLogged();
+
+
+    if (this.entityForm.valid) {
 
       const entity: IUser = {
         id: this.entityId,
-        name : this.entityForm.value.name!,
+        name: this.entityForm.value.name!,
         login: this.entityForm.value.login!,
-        email : this.entityForm.value.email!,
+        email: this.entityForm.value.email!,
         password: this.entityForm.value.password!,
         profile: this.entityForm.value.profile!,
         situation: this.entityForm.value.situation!,
-        updatedBy: "usuário que alterou",
+        updatedBy: userLogged,
         updatedAt: new Date()
       }
 
-      if (this.entityId > 0)
-      {
-
-
-        //this._userService.update(entity).subscribe(() => {
-
-          this._toastr.success(this.formName + ' alterado com sucesso!');
-        //})
-
+      if (this.entityId > 0) {
+        this.userService.update(entity).subscribe(() => {
+          this.toastr.success(this.formName + ' alterado com sucesso!');
+        },
+          (error: any) => {
+            this.toastr.error(error.error)
+          });
       }
-      else
-      {
-        entity.createdBy = "usuário que criou";
+      else {
+        entity.createdBy = userLogged;
         entity.createdAt = new Date();
 
-        //this._userService.add(entity).subscribe(() => {
+        this.userService.add(entity).subscribe(() => {
 
-        //  this._toastr.success(this.formName + ' salvo com sucesso!');
-          this._router.navigateByUrl("/list-user");
-        //})
+          this.toastr.success(this.formName + ' salvo com sucesso!');
+
+        },
+        (error: any) => {
+          this.toastr.error(error.error)
+        });
       }
 
-      this._router.navigateByUrl("/list-user"); 
-  
-      
+      this.router.navigateByUrl("/list-user");
     }
-
-
   }
 
   showPassword: boolean = false;
@@ -149,5 +154,4 @@ export class UserFormComponent {
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
-
 }

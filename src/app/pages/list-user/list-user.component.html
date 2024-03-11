@@ -43,25 +43,18 @@
           <ng-container matColumnDef="profile">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Perfil </th>
             <td mat-cell *matCellDef="let element"> {{getProfile(element.profile)}} </td>
-          </ng-container>          
+          </ng-container>
 
           <ng-container matColumnDef="situation">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-            <td mat-cell *matCellDef="let element">  
-
-              <div style="border:1px solid #ddd; width: 70px; text-align: center; border-radius: 10px; padding: 2px; color:#808080">
-
-
-              <span [class.bolinha-verde]="element.situation === 1" [class.bolinha-cinza]="(element.situation === 0)"></span>
-
-
-            <span>Ativo</span>
-
-            
-          </div>
-          </td>
-
-
+            <td mat-cell *matCellDef="let element">
+              <div
+                style="border:1px solid #ddd; width: 70px; text-align: center; border-radius: 10px; padding: 2px; color:#808080">
+                <span [class.bolinha-verde]="element.situation === 1"
+                  [class.bolinha-cinza]="(element.situation === 0)"></span>
+                <span>Ativo</span>
+              </div>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="action">
@@ -70,7 +63,8 @@
               <button mat-icon-button matTooltip="Editar {{formName}}" style="color: #58585A" (click)="Edit(row.id)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button matTooltip="Deletar {{formName}}" style="color: #FA8072" (click)="openDeleteConfirmation(row.id)">
+              <button mat-icon-button matTooltip="Deletar {{formName}}" style="color: #FA8072"
+                (click)="openDeleteConfirmation(row.id)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>

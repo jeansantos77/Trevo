@@ -2,9 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/co
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
-import { MatSort, Sort, MatSortModule} from '@angular/material/sort';
-import { LiveAnnouncer} from '@angular/cdk/a11y';
-import { MatIconModule} from '@angular/material/icon';
+import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -16,12 +16,13 @@ import { ToastrService } from 'ngx-toastr';
 import { IUser } from '../../interfaces/user';
 import { UserService } from '../../services/user.service';
 
+
 @Component({
   selector: 'app-list-user',
   standalone: true,
   imports: [
-    MatTableModule, 
-    MatCardModule, 
+    MatTableModule,
+    MatCardModule,
     MatPaginatorModule,
     MatSortModule,
     MatIconModule,
@@ -30,7 +31,6 @@ import { UserService } from '../../services/user.service';
     FlexLayoutModule,
     MatTooltipModule,
     RouterLink,
-
   ],
   templateUrl: './list-user.component.html',
   styleUrl: './list-user.component.scss'
@@ -38,37 +38,29 @@ import { UserService } from '../../services/user.service';
 
 
 export class ListUserComponent implements OnInit, AfterViewInit {
-  _liveAnnouncer= inject(LiveAnnouncer);
-  _dialog= inject( MatDialog);
-  _toastr = inject(ToastrService);
-  _userService = inject(UserService);
-  _router = inject(Router);
+  _liveAnnouncer = inject(LiveAnnouncer);
+  dialog = inject(MatDialog);
+  toastr = inject(ToastrService);
+  userService = inject(UserService);
+  router = inject(Router);
 
   formName: string = "Usuário";
   buttonTooltip: string = "Cria um novo " + this.formName;
   createPage: string = "/user-form";
 
-  _userList : IUser [] = [];
-
   displayedColumns: string[] = ['id', 'name', 'login', 'email', 'profile', 'situation', 'action'];
-  dataSource = new MatTableDataSource<IUser>(this._userList);
+  dataSource = new MatTableDataSource<IUser>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit() {
-    /*this._userService.getAll().subscribe(data => {
-      this._userList = data;  
-    })*/
-
-    this._userList = this._userService.getAll()
-
+    this.loadData();
   }
 
   ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource<IUser>(this._userList);
-    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
 
     this.paginator._intl.itemsPerPageLabel = 'Itens por página';
     this.paginator._intl.firstPageLabel = 'Primeira';
@@ -79,10 +71,6 @@ export class ListUserComponent implements OnInit, AfterViewInit {
   }
 
   announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
@@ -90,9 +78,15 @@ export class ListUserComponent implements OnInit, AfterViewInit {
     }
   }
 
+  loadData() {
+    this.userService.getAll().subscribe(data => {
+      this.dataSource.data = data;
+    })
+  }
+
   Edit(id: number) {
-    this._router.navigateByUrl("/user-form/" + id);
-    
+    this.router.navigateByUrl("/user-form/" + id);
+
     /*const dialogRef = this._dialog.open(UsuariosComponent, {
       width: '1300px',
       data,
@@ -109,7 +103,7 @@ export class ListUserComponent implements OnInit, AfterViewInit {
   }
 
   openDeleteConfirmation(id: number): void {
-    const dialogRef = this._dialog.open(DeleteConfirmationComponent, {
+    const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
       height: '180px',
       width: '300px',
       data: { id: id }
@@ -117,42 +111,40 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        //this._userService.delete(id).subscribe(() => {
-          this._toastr.success(this.formName + ' excluído com sucesso!');
-          this._userList = this._userList.filter(x => x.id != id);
-          this.dataSource = new MatTableDataSource<IUser>(this._userList);
-        //})
-
-        
+        this.userService.delete(id).subscribe(() => {
+          this.toastr.success(this.formName + ' excluído com sucesso!');
+          this.loadData();
+        },
+        (error: any) => {
+          this.toastr.error(error.error)
+        });
       }
     });
   }
 
   applyFilter(event: Event) {
+
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+
   }
 
-  getProfile(profile : number) {
+  getProfile(profile: number) {
     let profileDescription = "Administrator";
 
-    if (profile == 2)
-    {
+    if (profile == 2) {
       profileDescription = "User";
     }
-    else if (profile == 3)
-    {
+    else if (profile == 3) {
       profileDescription = "Viewer";
     }
 
     return profileDescription;
-    
   }
-
 }
 
 

@@ -53,7 +53,7 @@ export class AuthService {
 
   }
 
-  getUserName(){
+  getUserLogged(){
     let token = this.getToken();
 
     if (!token) 
