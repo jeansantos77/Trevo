@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,14 +10,14 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
-import { UserService } from '../../services/user.service';
-import { IUser } from '../../interfaces/user';
 import { AuthService } from '../../services/auth.service';
+import { IState } from '../../interfaces/state';
+import { StateService } from '../../services/state.service';
 
 @Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.scss',
+  selector: 'app-state-form',
+  templateUrl: './state-form.component.html',
+  styleUrl: './state-form.component.scss',
   standalone: true,
   imports: [
     MatInputModule,
@@ -33,50 +32,23 @@ import { AuthService } from '../../services/auth.service';
     MatIconModule
   ]
 })
-export class UserFormComponent {
+export class StateFormComponent {
 
   private toastr = inject(ToastrService)
   private router = inject(Router)
   private route = inject(ActivatedRoute)
-  private userService = inject(UserService);
+  private stateService = inject(StateService);
   private authService = inject(AuthService);
 
-  formName: string = "Usuário"
-  listPage: string = "/list-user"
+  formName: string = "Estado"
+  listPage: string = "/list-state"
   requiredMessage: string = "Campo obrigatório"
 
   private fb = inject(FormBuilder);
   entityForm = this.fb.group({
     name: [null, Validators.required],
-    email: [null, [Validators.required, Validators.email]],
-    login: [null, Validators.required],
-    password: [null, Validators.required],
-    profile: [1, Validators.required],
-    active: true
-
-
-
-    /*state: [null, Validators.required],
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
-    shipping: ['free', Validators.required]*/
+    uf: [null, Validators.required]
   });
-
-  profiles = [
-    { name: 'Administrator', value: 1 },
-    { name: 'User', value: 2 },
-    { name: 'Viewer', value: 3 }
-  ];
-
-  defaultProfile = 1;
-
-  situations = [
-    { description: 'Ativo', value: true },
-    { description: 'Inativo', value: false }
-  ];
-
-  defaultSituation = true
 
   entityId!: number;
 
@@ -84,23 +56,16 @@ export class UserFormComponent {
     this.entityId = this.route.snapshot.params['id'];
 
     if (this.entityId) {
-      this.userService.getById(this.entityId).subscribe((data: any) => {
+      this.stateService.getById(this.entityId).subscribe((data: any) => {
 
         if (data != null) {
           this.entityForm.controls['name'].setValue(data.name);
-          this.entityForm.controls['email'].setValue(data.email);
-          this.entityForm.controls['login'].setValue(data.login);
-          this.entityForm.controls['password'].setValue(data.password);
-          this.entityForm.controls.password.disable();
-          this.entityForm.controls['profile'].setValue(data.profile);
-          this.entityForm.controls['active'].setValue(data.active);
+          this.entityForm.controls['uf'].setValue(data.uf);
         }
       },
         (error: any) => {
           this.toastr.error(error.error)
         });
-
-      //this.entityForm.controls.email.disable();
     }
 
   }
@@ -111,20 +76,16 @@ export class UserFormComponent {
 
     if (this.entityForm.valid) {
 
-      const entity: IUser = {
+      const entity: IState = {
         id: this.entityId,
         name: this.entityForm.value.name!,
-        login: this.entityForm.value.login!,
-        email: this.entityForm.value.email!,
-        password: this.entityForm.value.password!,
-        profile: this.entityForm.value.profile!,
-        active: this.entityForm.value.active!,
+        uf: this.entityForm.value.uf!,
         updatedBy: userLogged,
         updatedAt: new Date()
       }
 
       if (this.entityId > 0) {
-        this.userService.update(entity).subscribe(() => {
+        this.stateService.update(entity).subscribe(() => {
           this.toastr.success(this.formName + ' alterado com sucesso!');
           this.redirectList();
         },
@@ -136,7 +97,7 @@ export class UserFormComponent {
         entity.createdBy = userLogged;
         entity.createdAt = new Date();
 
-        this.userService.add(entity).subscribe(() => {
+        this.stateService.add(entity).subscribe(() => {
           this.toastr.success(this.formName + ' salvo com sucesso!');
           this.redirectList();
         },
@@ -144,6 +105,8 @@ export class UserFormComponent {
           this.toastr.error(error.error || error.message)
         });
       }
+
+      
     }
   }
 
@@ -151,9 +114,4 @@ export class UserFormComponent {
     this.router.navigateByUrl(this.listPage);
   }
 
-  showPassword: boolean = false;
-
-  togglePasswordVisibility(): void {
-    this.showPassword = !this.showPassword;
-  }
 }

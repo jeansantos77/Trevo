@@ -14,24 +14,24 @@ export class UserService {
   constructor() { }
 
   getAll() {
-    return this.http.get<IUser[]>(this.apiUrl + 'user')
+    return this.http.get<IUser[]>(this.apiUrl + 'api/user')
   }
 
   getById(id: number) {
-    return this.http.get<IUser>(this.apiUrl + 'user/' + id)
+    return this.http.get<IUser>(this.apiUrl + 'api/user/' + id)
   }
 
   add(user: IUser) {
-    return this.http.post(this.apiUrl + 'user', user)
+    return this.http.post(this.apiUrl + 'api/user', user)
 
   }
 
   update(user: IUser) {
-    return this.http.put<IUser[]>(this.apiUrl + 'user/' + user.id, user)
+    return this.http.put<IUser[]>(this.apiUrl + 'api/user/' + user.id, user)
   }
 
   delete(id: number) {
-    return this.http.delete(this.apiUrl + 'user/' + id)
+    return this.http.delete(this.apiUrl + 'api/user/' + id)
   }
 
 }

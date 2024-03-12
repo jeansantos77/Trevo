@@ -1,11 +1,7 @@
-export interface IUser {
+export interface IState {
     id: number;
     name: string;
-    email: string;
-    login: string;
-    password: string;
-    profile: number;
-    active?: boolean;
+    uf: string;
     createdBy? : string;
     createdAt? : Date;
     updatedBy? : string;

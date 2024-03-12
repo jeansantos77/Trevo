@@ -52,10 +52,12 @@
 
               <input matInput type="{{ showPassword ? 'text' : 'password' }}" placeholder="Senha"
                 formControlName="password">
+
+              @if (!entityId) {
               <mat-icon (click)="togglePasswordVisibility()" matSuffix>
                 {{ showPassword ? 'visibility_off' : 'visibility' }}
               </mat-icon>
-
+              }
               @if (entityForm.controls['password'].hasError('required')) {
               <mat-error><strong>{{requiredMessage}}</strong></mat-error>
               }
@@ -85,7 +87,7 @@
             <label>Situação</label>
 
             <mat-form-field appearance="outline">
-              <mat-select value=1 formControlName="situation">
+              <mat-select value=1 formControlName="active">
 
                 @for (situation of situations; track situation) {
                 <mat-option [value]="situation.value">{{ situation.description }}</mat-option>

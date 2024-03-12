@@ -14,11 +14,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
 import { IUser } from '../../interfaces/user';
-import { UserService } from '../../services/user.service';
-
+import { StateService } from '../../services/state.service';
+import { IState } from '../../interfaces/state';
 
 @Component({
-  selector: 'app-list-user',
+  selector: 'app-list-state',
   standalone: true,
   imports: [
     MatTableModule,
@@ -30,26 +30,26 @@ import { UserService } from '../../services/user.service';
     MatInputModule,
     FlexLayoutModule,
     MatTooltipModule,
-    RouterLink,
+    RouterLink
   ],
-  templateUrl: './list-user.component.html',
-  styleUrl: './list-user.component.scss'
+  templateUrl: './list-state.component.html',
+  styleUrl: './list-state.component.scss'
 })
 
 
-export class ListUserComponent implements OnInit, AfterViewInit {
+export class ListStateComponent implements OnInit, AfterViewInit {
   _liveAnnouncer = inject(LiveAnnouncer);
   dialog = inject(MatDialog);
   toastr = inject(ToastrService);
-  userService = inject(UserService);
+  stateService = inject(StateService);
   router = inject(Router);
 
-  formName: string = "Usuário";
+  formName: string = "Estado";
   buttonTooltip: string = "Cria um novo " + this.formName;
-  entityPage: string = "/user-form";
+  entityPage: string = "/state-form";
 
-  displayedColumns: string[] = ['id', 'name', 'login', 'email', 'profile', 'active', 'action'];
-  dataSource = new MatTableDataSource<IUser>();
+  displayedColumns: string[] = ['id', 'name', 'uf', 'action'];
+  dataSource = new MatTableDataSource<IState>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -79,27 +79,14 @@ export class ListUserComponent implements OnInit, AfterViewInit {
   }
 
   loadData() {
-    this.userService.getAll().subscribe(data => {
+    this.stateService.getAll().subscribe(data => {
       this.dataSource.data = data;
     })
   }
 
   Edit(id: number) {
+console.log(`${this.entityPage}/${id}`) ;   
     this.router.navigateByUrl(`${this.entityPage}/${id}`);
-
-    /*const dialogRef = this._dialog.open(UsuariosComponent, {
-      width: '1300px',
-      data,
-    });
-
-    dialogRef.afterClosed().subscribe({
-      next: (val) => {
-        if (val) {
-          this.getEmployeeList();
-        }
-      },
-    });*/
-
   }
 
   openDeleteConfirmation(id: number): void {
@@ -111,7 +98,7 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.userService.delete(id).subscribe(() => {
+        this.stateService.delete(id).subscribe(() => {
           this.toastr.success(this.formName + ' excluído com sucesso!');
           this.loadData();
         },
@@ -133,18 +120,6 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
   }
 
-  getProfile(profile: number) {
-    let profileDescription = "Administrator";
-
-    if (profile == 2) {
-      profileDescription = "User";
-    }
-    else if (profile == 3) {
-      profileDescription = "Viewer";
-    }
-
-    return profileDescription;
-  }
 }
 
 

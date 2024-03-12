@@ -3,4 +3,33 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+
 @import 'ngx-toastr/toastr';
+
+.active-container {
+    border:1px solid #DCDCDC; 
+    width: 70px; 
+    text-align: center; 
+    border-radius: 7px; 
+    padding: 2px; 
+    color:#4F4F4F;
+    font-weight: 500;
+  }
+
+  .green-ball {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: green;
+    margin-right: 5px; 
+  }
+  
+  .gray-ball {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: gray;
+    margin-right: 5px; 
+  }

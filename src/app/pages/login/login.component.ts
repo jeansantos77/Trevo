@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
         },
         error: (error) => {
           console.log(error);
-          this.toastr.error(error.error);
+          this.toastr.error(error.error || error.message);
         }
       })
   
