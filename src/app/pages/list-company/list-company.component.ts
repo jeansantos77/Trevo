@@ -13,11 +13,8 @@ import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
-import { IUser } from '../../interfaces/user';
-import { UserService } from '../../services/user.service';
 import { CompanyService } from '../../services/company.service';
 import { ICompany } from '../../interfaces/company';
-
 
 @Component({
   selector: 'app-list-company',
@@ -32,7 +29,7 @@ import { ICompany } from '../../interfaces/company';
     MatInputModule,
     FlexLayoutModule,
     MatTooltipModule,
-    RouterLink,
+    RouterLink
   ],
   templateUrl: './list-company.component.html',
   styleUrl: './list-company.component.scss'
@@ -119,6 +116,10 @@ export class ListCompanyComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
 
+  }
+
+  formatCnpj(cnpj: string): string {
+    return cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
   }
 
 }

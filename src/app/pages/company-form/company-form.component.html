@@ -36,12 +36,12 @@
                 </div>
 
                 <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
-                    fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap="21px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
                     fxLayoutGap.xs="0px">
                     <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Telefone</label>
                         <mat-form-field appearance="outline">
-                            <input matInput placeholder="Telefone" formControlName="phone" maxlength="20">
+                            <input matInput placeholder="Telefone" formControlName="phone" maxlength="50">
                             @if (entityForm.controls['phone'].hasError('required')) {
                             <mat-error><strong>{{requiredMessage}}</strong></mat-error>
                             }
@@ -49,9 +49,12 @@
                     </div>
 
                     <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-                        <label>Id Externo</label>
+                        <label>CNPJ</label>
                         <mat-form-field appearance="outline">
-                            <input matInput placeholder="Id Externo" formControlName="externalId">
+                            <input matInput placeholder="CNPJ" formControlName="cnpj" maxlength="18" mask="00.000.000/0000-00">
+                            @if (entityForm.controls['cnpj'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
                         </mat-form-field>
                     </div>
                 </div>
@@ -59,20 +62,12 @@
                 <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
                     fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
                     fxLayoutGap.xs="0px">
-                    <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-                        <label>CNPJ</label>
-                        <mat-form-field appearance="outline">
-                            <input matInput placeholder="CNPJ" formControlName="cnpj" maxlength="14">
-                            @if (entityForm.controls['cnpj'].hasError('required')) {
-                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
-                            }
-                        </mat-form-field>
-                    </div>
 
-                    <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+
+                    <div class="col" fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
                         <label>CEP</label>
                         <mat-form-field appearance="outline">
-                            <input matInput placeholder="CEP" formControlName="cep" maxlength="8">
+                            <input matInput placeholder="CEP" formControlName="cep" maxlength="9" mask="00000-000">
                             
                             @if (entityForm.controls['cep'].hasError('required')) {
                                 <mat-error><strong>{{requiredMessage}}</strong></mat-error>
@@ -80,22 +75,18 @@
 
                         </mat-form-field>
                     </div>
-                </div>
 
-                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
-                    fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
-                    fxLayoutGap.xs="0px">
-                    <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-                        <label>Rua</label>
+                    <div class="col" fxFlex="67" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Logradouro</label>
                         <mat-form-field appearance="outline">
-                            <input matInput placeholder="Rua" formControlName="street">
+                            <input matInput placeholder="Logradouro" formControlName="street">
                             @if (entityForm.controls['street'].hasError('required')) {
                             <mat-error><strong>{{requiredMessage}}</strong></mat-error>
                             }
                         </mat-form-field>
                     </div>
 
-                    <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="col" fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Número</label>
                         <mat-form-field appearance="outline">
                             <input matInput placeholder="Número" formControlName="number">
@@ -106,6 +97,7 @@
 
                         </mat-form-field>
                     </div>
+
                 </div>
 
                 <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
@@ -136,14 +128,14 @@
 
 
                 <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
-                    fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap="21px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
                     fxLayoutGap.xs="0px">
-                    <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="col" fxFlex="37" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Estado</label>
                         <mat-form-field appearance="outline">
                             <mat-select formControlName="state">
-                                @for (state of states; track state) {
-                                <mat-option [value]="state.value">{{ state.value }}</mat-option>
+                                @for (uf of ufs; track uf) {
+                                <mat-option [value]="uf">{{ uf }}</mat-option>
                                 }
                             </mat-select>
 
@@ -151,6 +143,13 @@
                             <mat-error><strong>{{requiredMessage}}</strong></mat-error>
                             }
 
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col" fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Id Externo</label>
+                        <mat-form-field appearance="outline">
+                            <input matInput placeholder="Id Externo" formControlName="externalId">
                         </mat-form-field>
                     </div>
 
@@ -170,8 +169,6 @@
 
                     </div>
                 </div>
-
-
 
             </mat-card-content>
             <mat-card-actions>

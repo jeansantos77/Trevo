@@ -4,42 +4,37 @@
   
   .sidenav-container {
     height: 100%;
+
+    mat-expantion-panel-header {
+      height: 40px;
+    }
   }
   
   .sidenav {
-    width: 250px;
+    width: 300px;
   
   }
-  
-  .sidenav .mat-toolbar {
-    background: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    margin: 10px 0px -10px 0px;
-  }
-  
-  .mat-toolbar.mat-primary {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
-  
+    
   .menu-image{
     vertical-align: bottom;
     font-size: 22px;
     color: #696969
   }
   
+  .menu-header {
+    height: 40px !important;
+  }
+
   .menu {
     font-size: 14px;
     font-weight: 500;
     margin-left: 10px;
     color: #696969;
-    
+    padding-top: 4px;
   }
   
   .logo{
-    background-color: #F8F8FF;
+    background-color: #58585A;
     height: 64px;
     text-align: center;
   
@@ -49,6 +44,9 @@
     }
   }
   
+  mat-nav-list mat-nav-list a {
+    height: 32px;
+  }
   
   
   

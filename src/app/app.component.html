@@ -1,14 +1,142 @@
-@if (isLogged) {
+@if (!isLogged) {
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
 
     <div class="logo" color="primary">
-      <img src="./assets/logo.png" alt="LTA-RH">
+      <img src="./assets/logo.png" alt="Trevo">
     </div>
 
-    <mat-toolbar>Formação de Preços</mat-toolbar>
     <mat-nav-list>
+      
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header class="menu-header">
+          <mat-icon class="menu-image">settings</mat-icon>
+          <span  class="menu">Configurações</span>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/agenda">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Geral</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Procuração</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Venda</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel [class.mat-elevation-z0]="true" [expanded]="true">
+        <mat-expansion-panel-header class="menu-header">
+          <mat-icon class="menu-image">group</mat-icon>
+          <span class="menu">Cadastros</span>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Países</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Estados</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Cidades</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Empresas</span>
+          </a>
+          <a mat-list-item routerLink="/list-user">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Usuários</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Marcas</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Modelos</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Clientes</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Fornecedores</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Vendedores</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Tipos de Despesas</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Categoria de Despesas</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Combustíveis</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Cores</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Categorias</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Acessórios</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Situações</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Formas de Pagamento</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Financeiras</span>
+          </a>
+
+        </mat-nav-list>
+      </mat-expansion-panel>
+      
+
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header class="menu-header">
+          <mat-icon class="menu-image">directions_car</mat-icon>
+          <span  class="menu">Operações com Veículos</span>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/agenda">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Entradas</span>
+          </a>
+          <a mat-list-item routerLink="#">
+            <mat-icon class="menu-image">navigate_next</mat-icon>
+            <span class="menu">Saídas</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+
+
+      <!--
+      
       <a mat-list-item routerLink="/list-user">
         <mat-icon class="menu-image">person_outline</mat-icon>
         <span class="menu">Usuários</span>
@@ -49,11 +177,14 @@
         <mat-icon class="menu-image">file_copy</mat-icon>
         <span class="menu">Relatório</span>
       </a>
+-->
+
+
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div>
-      <mat-toolbar style="background-color:#DCDCDC;">
+      <mat-toolbar style="background-color:#58585A; color: #fff;">
         <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>

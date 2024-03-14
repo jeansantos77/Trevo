@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,10 +10,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
-import { IUser } from '../../interfaces/user';
 import { AuthService } from '../../services/auth.service';
 import { CompanyService } from '../../services/company.service';
 import { ICompany } from '../../interfaces/company';
+import { NgxMaskDirective } from 'ngx-mask';
+import { StateService } from '../../services/state.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-company-form',
@@ -31,7 +32,8 @@ import { ICompany } from '../../interfaces/company';
     FlexLayoutModule,
     RouterLink,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    NgxMaskDirective
   ]
 })
 export class CompanyFormComponent {
@@ -41,6 +43,7 @@ export class CompanyFormComponent {
   private route = inject(ActivatedRoute)
   private companyService = inject(CompanyService);
   private authService = inject(AuthService);
+  private stateService = inject(StateService);
 
   formName: string = "Empresa"
   listPage: string = "/list-company"
@@ -64,21 +67,24 @@ export class CompanyFormComponent {
   });
 
   situations = [
-    { description: 'Ativo', value: true },
-    { description: 'Inativo', value: false }
+    { description: 'Ativa', value: true },
+    { description: 'Inativoa', value: false }
   ];
-
-  states = [
-    { description: 'Rio Grande do Sul', value: 'RS' },
-    { description: 'Santa Catarina', value: 'SC' }
-  ];
-
 
   defaultSituation = true
 
   entityId!: number;
 
+  ufs: string[] = [];
+
   ngOnInit() {
+
+    this.stateService.getAll().pipe(
+      map(ufs => ufs.map(uf => uf.uf))
+    ).subscribe(ufs => {
+      this.ufs = ufs;
+    });
+
     this.entityId = this.route.snapshot.params['id'];
 
     if (this.entityId) {

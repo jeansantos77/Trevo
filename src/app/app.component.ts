@@ -15,6 +15,8 @@ import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from './services/auth.service';
 import { environment } from '../environments/environment';
 
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 @Component({
   selector: 'app-root',
@@ -30,12 +32,13 @@ import { environment } from '../environments/environment';
     RouterModule,
     MatMenuModule,
     MatTooltipModule,
+    MatExpansionModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements DoCheck {
-  title = 'LTA';
+  title = 'Trevo';
   env: string = environment.production ? 'Produção' : 'Desenvolvimento';
 
   isLogged: boolean = false;

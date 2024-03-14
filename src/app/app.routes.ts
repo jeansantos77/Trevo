@@ -12,12 +12,12 @@ export const routes: Routes = [
     { 
         path: 'list-user', 
         component: ListUserComponent,
-        canActivate: [authGuard]
+        //canActivate: [authGuard]
     },
     { 
         path: 'user-form', 
         component: UserFormComponent,
-        canActivate: [authGuard]
+        //canActivate: [authGuard]
     },
     { 
         path: 'user-form/:id', 
