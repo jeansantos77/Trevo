@@ -1,4 +1,4 @@
-export interface ICompany {
+export interface IEmpresa {
     id: number;
     name: string;
     email: string;

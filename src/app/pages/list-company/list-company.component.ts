@@ -13,8 +13,8 @@ import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
-import { CompanyService } from '../../services/company.service';
-import { ICompany } from '../../interfaces/company';
+import { CompanyService } from '../../services/empresa.service';
+import { ICompany } from '../../interfaces/empresa';
 
 @Component({
   selector: 'app-list-company',

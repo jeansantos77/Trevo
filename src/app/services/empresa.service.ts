@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { IUser } from '../interfaces/user';
 import { environment } from '../../environments/environment';
-import { ICompany } from '../interfaces/company';
+import { ICompany } from '../interfaces/empresa';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CompanyService {
+export class EmpresaService {
 
   apiUrl: string = environment.apiUrl;
 
