@@ -1,0 +1,74 @@
+<div class="main-body" fxLayout="column" fxLayoutAlign="center">
+
+    <mat-card>
+      <mat-card-header>
+        {{formName}}
+      </mat-card-header>
+      <mat-card-content>
+  
+        <div class="filter">
+          <mat-form-field style="background-color: #F5F5F5;color:#808080; height: 55px;" appearance="outline">
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput (keyup)="applyFilter($event)" #input>
+          </mat-form-field>
+          <button routerLink="{{entityPage}}" matTooltip={{buttonTooltip}} mat-raised-button>
+            <mat-icon>add</mat-icon>
+            Novo
+          </button>
+        </div>
+  
+        <div class="table-container" fxLayout="column" fxLayoutAlign="center stretch">
+          <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+  
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+              <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="nome">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+              <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="cnpj">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> CNPJ </th>
+              <td mat-cell *matCellDef="let element"> {{formatCnpj(element.cnpj) }} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+              <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="telefone">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefone </th>
+              <td mat-cell *matCellDef="let element"> {{element.telefone}} </td>
+            </ng-container>
+  
+  
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef style="width: 13%;">Ação</th>
+              <td mat-cell *matCellDef="let row">
+                <button mat-icon-button matTooltip="Editar {{formName}}" style="color: #58585A" (click)="Edit(row.id)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Deletar {{formName}}" style="color: #FA8072"
+                  (click)="openDeleteConfirmation(row.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+  
+          <br>
+  
+        </div>
+      </mat-card-content>
+      <mat-card-footer>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </mat-card-footer>
+    </mat-card>
+  </div>

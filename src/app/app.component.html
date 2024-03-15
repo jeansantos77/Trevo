@@ -1,4 +1,4 @@
-@if (!isLogged) {
+@if (isLogged) {
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
@@ -36,19 +36,19 @@
           <span class="menu">Cadastros</span>
         </mat-expansion-panel-header>
         <mat-nav-list>
-          <a mat-list-item routerLink="#">
+          <a mat-list-item routerLink="/list-country">
             <mat-icon class="menu-image">navigate_next</mat-icon>
             <span class="menu">Países</span>
           </a>
-          <a mat-list-item routerLink="#">
+          <a mat-list-item routerLink="/list-state">
             <mat-icon class="menu-image">navigate_next</mat-icon>
             <span class="menu">Estados</span>
           </a>
-          <a mat-list-item routerLink="#">
+          <a mat-list-item routerLink="/list-city">
             <mat-icon class="menu-image">navigate_next</mat-icon>
             <span class="menu">Cidades</span>
           </a>
-          <a mat-list-item routerLink="#">
+          <a mat-list-item routerLink="/list-company">
             <mat-icon class="menu-image">navigate_next</mat-icon>
             <span class="menu">Empresas</span>
           </a>
@@ -182,7 +182,7 @@
 
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content style="background-color: #d9d9d9;">
     <div>
       <mat-toolbar style="background-color:#58585A; color: #fff;">
         <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">

@@ -1,14 +1,13 @@
-export interface IEmpresa {
+export interface IUsuario {
     id: number;
     nome: string;
     email: string;
+    login: string;
+    senha: string;
     telefone: string;
-    cnpj: string;
-    cep: string;
-    logradouro: string;
-    numero: string;
-    bairro: string;
-    cidadeId: number;
+    cpf: string;
+    perfil: number;
+    ativo: boolean;
     criadoPor? : string;
     criadoEm? : Date;
     atualizadoPor? : string;

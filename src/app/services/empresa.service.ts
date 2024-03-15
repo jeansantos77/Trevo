@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { IUser } from '../interfaces/user';
 import { environment } from '../../environments/environment';
-import { ICompany } from '../interfaces/empresa';
+import { IEmpresa } from '../interfaces/empresa';
 
 @Injectable({
   providedIn: 'root'
@@ -15,24 +14,24 @@ export class EmpresaService {
   constructor() { }
 
   getAll() {
-    return this.http.get<ICompany[]>(this.apiUrl + 'api/company')
+    return this.http.get<IEmpresa[]>(this.apiUrl + 'api/empresa')
   }
 
   getById(id: number) {
-    return this.http.get<ICompany>(this.apiUrl + 'api/company/' + id)
+    return this.http.get<IEmpresa>(this.apiUrl + 'api/empresa/' + id)
   }
 
-  add(entity: ICompany) {
-    return this.http.post(this.apiUrl + 'api/company', entity)
+  add(entity: IEmpresa) {
+    return this.http.post(this.apiUrl + 'api/empresa', entity)
 
   }
 
-  update(entity: ICompany) {
-    return this.http.put<ICompany[]>(this.apiUrl + 'api/company/' + entity.id, entity)
+  update(entity: IEmpresa) {
+    return this.http.put(this.apiUrl + 'api/empresa/' + entity.id, entity)
   }
 
   delete(id: number) {
-    return this.http.delete(this.apiUrl + 'api/company/' + id)
+    return this.http.delete(this.apiUrl + 'api/empresa/' + id)
   }
 
 }
