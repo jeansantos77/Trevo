@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,14 +10,14 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
-import { UsuarioService } from '../../../services/usuario.service';
-import { IUsuario } from '../../../interfaces/usuario';
 import { AuthService } from '../../../services/auth.service';
+import { ITipoDespesa } from '../../../interfaces/tipoDespesa';
+import { TipoDespesaService } from '../../../services/tipoDespesa.service';
 
 @Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.scss',
+  selector: 'app-tipo-despesa-form',
+  templateUrl: './tipo-despesa-form.component.html',
+  styleUrl: './tipo-despesa-form.component.scss',
   standalone: true,
   imports: [
     MatInputModule,
@@ -30,45 +29,25 @@ import { AuthService } from '../../../services/auth.service';
     FlexLayoutModule,
     RouterLink,
     MatFormFieldModule,
-    MatIconModule,
-
+    MatIconModule
   ]
 })
-export class UserFormComponent {
+export class TipoDespesaFormComponent {
 
   private toastr = inject(ToastrService)
   private router = inject(Router)
   private route = inject(ActivatedRoute)
-  private usuarioService = inject(UsuarioService);
+  private tipoDespesaService = inject(TipoDespesaService);
   private authService = inject(AuthService);
 
-  formName: string = "Usuário"
-  listPage: string = "/list-user"
+  formName: string = "Tipos de Despesa"
+  listPage: string = "/list-tipo-despesa"
   requiredMessage: string = "Campo obrigatório"
 
   private fb = inject(FormBuilder);
   entityForm = this.fb.group({
-    nome: [null, Validators.required],
-    email: [null, [Validators.required, Validators.email]],
-    login: [null, Validators.required],
-    senha: [null, Validators.required],
-    perfil: [1, Validators.required],
-    ativo: true
+    descricao: [null, Validators.required],
   });
-
-  profiles = [
-    { name: 'Administrador', value: 1 },
-    { name: 'Usuario', value: 2 }
-  ];
-
-  defaultProfile = 1;
-
-  situations = [
-    { description: 'Ativo', value: true },
-    { description: 'Inativo', value: false }
-  ];
-
-  defaultSituation = true
 
   entityId!: number;
 
@@ -76,23 +55,15 @@ export class UserFormComponent {
     this.entityId = this.route.snapshot.params['id'];
 
     if (this.entityId) {
-      this.usuarioService.getById(this.entityId).subscribe((data: any) => {
+      this.tipoDespesaService.getById(this.entityId).subscribe((data: any) => {
 
         if (data != null) {
-          this.entityForm.controls['nome'].setValue(data.nome);
-          this.entityForm.controls['email'].setValue(data.email);
-          this.entityForm.controls['login'].setValue(data.login);
-          this.entityForm.controls['senha'].setValue(data.senha);
-          this.entityForm.controls['perfil'].setValue(data.perfil);
-          this.entityForm.controls['ativo'].setValue(data.ativo);
-
-//          this.entityForm.controls.senha.disable();
+          this.entityForm.controls['descricao'].setValue(data.descricao);
         }
       },
         (error: any) => {
           this.toastr.error(error.error)
         });
-
     }
 
   }
@@ -103,22 +74,16 @@ export class UserFormComponent {
 
     if (this.entityForm.valid) {
 
-      const entity: IUsuario = {
+      const entity: ITipoDespesa = {
         id: this.entityId,
-        nome: this.entityForm.value.nome!,
-        login: this.entityForm.value.login!,
-        email: this.entityForm.value.email!,
-        senha: this.entityForm.value.senha!,
-        perfil: this.entityForm.value.perfil!,
-        ativo: this.entityForm.value.ativo!,
+        descricao: this.entityForm.value.descricao!,
         atualizadoPor: userLogged,
         atualizadoEm: new Date()
       }
 
       if (this.entityId > 0) {
-       
-        this.usuarioService.update(entity).subscribe(() => {
-          this.toastr.success(this.formName + ' alterado com sucesso!');
+        this.tipoDespesaService.update(entity).subscribe(() => {
+          this.toastr.success(this.formName + ' alterada com sucesso!');
           this.redirectList();
         },
           (error: any) => {
@@ -129,14 +94,16 @@ export class UserFormComponent {
         entity.criadoPor = userLogged;
         entity.criadoEm = new Date();
 
-        this.usuarioService.add(entity).subscribe(() => {
-          this.toastr.success(this.formName + ' salvo com sucesso!');
+        this.tipoDespesaService.add(entity).subscribe(() => {
+          this.toastr.success(this.formName + ' salva com sucesso!');
           this.redirectList();
         },
         (error: any) => {
           this.toastr.error(error.error || error.message)
         });
       }
+
+      
     }
   }
 
@@ -144,9 +111,4 @@ export class UserFormComponent {
     this.router.navigateByUrl(this.listPage);
   }
 
-  showPassword: boolean = false;
-
-  togglePasswordVisibility(): void {
-    this.showPassword = !this.showPassword;
-  }
 }

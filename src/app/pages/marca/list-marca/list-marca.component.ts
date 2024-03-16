@@ -14,11 +14,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
 import { IUsuario } from '../../../interfaces/usuario';
-import { UsuarioService } from '../../../services/usuario.service';
-
+import { MarcaService } from '../../../services/marca.service';
+import { IMarca } from '../../../interfaces/marca';
 
 @Component({
-  selector: 'app-list-user',
+  selector: 'app-list-marca',
   standalone: true,
   imports: [
     MatTableModule,
@@ -30,26 +30,26 @@ import { UsuarioService } from '../../../services/usuario.service';
     MatInputModule,
     FlexLayoutModule,
     MatTooltipModule,
-    RouterLink,
+    RouterLink
   ],
-  templateUrl: './list-user.component.html',
-  styleUrl: './list-user.component.scss'
+  templateUrl: './list-marca.component.html',
+  styleUrl: './list-marca.component.scss'
 })
 
 
-export class ListUserComponent implements OnInit, AfterViewInit {
+export class ListMarcaComponent implements OnInit, AfterViewInit {
   _liveAnnouncer = inject(LiveAnnouncer);
   dialog = inject(MatDialog);
   toastr = inject(ToastrService);
-  usuarioService = inject(UsuarioService);
+  marcaService = inject(MarcaService);
   router = inject(Router);
 
-  formName: string = "Usuário";
+  formName: string = "Marca";
   buttonTooltip: string = "Cria um novo " + this.formName;
-  entityPage: string = "/user-form";
+  entityPage: string = "/marca-form";
 
-  displayedColumns: string[] = ['id', 'nome', 'login', 'email', 'perfil', 'ativo', 'action'];
-  dataSource = new MatTableDataSource<IUsuario>();
+  displayedColumns: string[] = ['id', 'descricao', 'action'];
+  dataSource = new MatTableDataSource<IMarca>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -79,12 +79,13 @@ export class ListUserComponent implements OnInit, AfterViewInit {
   }
 
   loadData() {
-    this.usuarioService.getAll().subscribe(data => {
+    this.marcaService.getAll().subscribe(data => {
       this.dataSource.data = data;
     })
   }
 
   Edit(id: number) {
+console.log(`${this.entityPage}/${id}`) ;   
     this.router.navigateByUrl(`${this.entityPage}/${id}`);
   }
 
@@ -97,8 +98,8 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.usuarioService.delete(id).subscribe(() => {
-          this.toastr.success(this.formName + ' excluído com sucesso!');
+        this.marcaService.delete(id).subscribe(() => {
+          this.toastr.success(this.formName + ' excluída com sucesso!');
           this.loadData();
         },
         (error: any) => {
@@ -119,18 +120,6 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
   }
 
-  getProfile(profile: number) {
-    let profileDescription = "";
-
-    if (profile == 1) {
-      profileDescription = "Administrador";
-    }
-    else {
-      profileDescription = "Usuario";
-    }
-
-    return profileDescription;
-  }
 }
 
 

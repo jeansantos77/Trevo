@@ -8,32 +8,15 @@
           <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
             fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
   
-            <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+            <div class="col" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
               <label>Nome</label>
               <mat-form-field appearance="outline">
-                <input matInput placeholder="Nome" formControlName="nome">
-                @if (entityForm.controls['nome'].hasError('required')) {
+                <input matInput placeholder="Descrição" formControlName="descricao">
+                @if (entityForm.controls['descricao'].hasError('required')) {
                 <mat-error><strong>{{requiredMessage}}</strong></mat-error>
                 }
               </mat-form-field>
             </div>
-            
-
-            <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-              <label>País</label>
-              <mat-form-field appearance="outline">
-                  <mat-select formControlName="estadoId" placeholder="Estado">
-                      @for (estado of estados; track estado) {
-                      <mat-option [value]="estado.id">{{ estado.nome }}</mat-option>
-                      }
-                  </mat-select>
-
-                  @if (entityForm.controls['estadoId'].hasError('required')) {
-                  <mat-error><strong>{{requiredMessage}}</strong></mat-error>
-                  }
-
-              </mat-form-field>
-          </div>
           </div>
   
         </mat-card-content>

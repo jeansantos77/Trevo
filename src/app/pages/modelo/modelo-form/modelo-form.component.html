@@ -11,8 +11,8 @@
             <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
               <label>Nome</label>
               <mat-form-field appearance="outline">
-                <input matInput placeholder="Nome" formControlName="nome">
-                @if (entityForm.controls['nome'].hasError('required')) {
+                <input matInput placeholder="Descrição" formControlName="descricao">
+                @if (entityForm.controls['descricao'].hasError('required')) {
                 <mat-error><strong>{{requiredMessage}}</strong></mat-error>
                 }
               </mat-form-field>
@@ -22,13 +22,13 @@
             <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
               <label>País</label>
               <mat-form-field appearance="outline">
-                  <mat-select formControlName="estadoId" placeholder="Estado">
-                      @for (estado of estados; track estado) {
-                      <mat-option [value]="estado.id">{{ estado.nome }}</mat-option>
+                  <mat-select formControlName="marcaId" placeholder="Marca">
+                      @for (marca of marcas; track marca) {
+                      <mat-option [value]="marca.id">{{ marca.descricao }}</mat-option>
                       }
                   </mat-select>
 
-                  @if (entityForm.controls['estadoId'].hasError('required')) {
+                  @if (entityForm.controls['marcaId'].hasError('required')) {
                   <mat-error><strong>{{requiredMessage}}</strong></mat-error>
                   }
 

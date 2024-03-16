@@ -12,6 +12,12 @@ import { ListCountryComponent } from './pages/country/list-country/list-country.
 import { CountryFormComponent } from './pages/country/country-form/country-form.component';
 import { CityFormComponent } from './pages/city/city-form/city-form.component';
 import { HomeComponent } from './pages/home/home.component';
+import { MarcaFormComponent } from './pages/marca/marca-form/marca-form.component';
+import { ListMarcaComponent } from './pages/marca/list-marca/list-marca.component';
+import { ModeloFormComponent } from './pages/modelo/modelo-form/modelo-form.component';
+import { ListModeloComponent } from './pages/modelo/list-modelo/list-modelo.component';
+import { ListTipoDespesaComponent } from './pages/tipo-despesa/list-tipo-despesa/list-tipo-despesa.component';
+import { TipoDespesaFormComponent } from './pages/tipo-despesa/tipo-despesa-form/tipo-despesa-form.component';
 
 export const routes: Routes = [
     { 
@@ -88,7 +94,52 @@ export const routes: Routes = [
         path: 'country-form/:id', 
         component: CountryFormComponent,
         canActivate: [authGuard]
+    },  
+    { 
+        path: 'list-marca', 
+        component: ListMarcaComponent,
+        canActivate: [authGuard]
+    },
+    { 
+        path: 'marca-form', 
+        component: MarcaFormComponent,
+        canActivate: [authGuard]
+    },
+    { 
+        path: 'marca-form/:id', 
+        component: MarcaFormComponent,
+        canActivate: [authGuard]
     },   
+    { 
+        path: 'list-modelo', 
+        component: ListModeloComponent,
+        canActivate: [authGuard]
+    },
+    { 
+        path: 'modelo-form', 
+        component: ModeloFormComponent,
+        canActivate: [authGuard]
+    },
+    { 
+        path: 'modelo-form/:id', 
+        component: ModeloFormComponent,
+        canActivate: [authGuard]
+    },     
+    { 
+        path: 'list-tipo-despesa', 
+        component: ListTipoDespesaComponent,
+        canActivate: [authGuard]
+    },
+    { 
+        path: 'tipo-despesa-form', 
+        component: TipoDespesaFormComponent,
+        canActivate: [authGuard]
+    },
+    { 
+        path: 'tipo-despesa-form/:id', 
+        component: TipoDespesaFormComponent,
+        canActivate: [authGuard]
+    },     
     { 
         path: 'home', 
         component: HomeComponent,

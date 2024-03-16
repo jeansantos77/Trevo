@@ -14,11 +14,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
 import { IUsuario } from '../../../interfaces/usuario';
-import { UsuarioService } from '../../../services/usuario.service';
-
+import { TipoDespesaService } from '../../../services/tipoDespesa.service';
+import { ITipoDespesa } from '../../../interfaces/tipoDespesa';
 
 @Component({
-  selector: 'app-list-user',
+  selector: 'app-list-tipo-despesa',
   standalone: true,
   imports: [
     MatTableModule,
@@ -30,26 +30,26 @@ import { UsuarioService } from '../../../services/usuario.service';
     MatInputModule,
     FlexLayoutModule,
     MatTooltipModule,
-    RouterLink,
+    RouterLink
   ],
-  templateUrl: './list-user.component.html',
-  styleUrl: './list-user.component.scss'
+  templateUrl: './list-tipo-despesa.component.html',
+  styleUrl: './list-tipo-despesa.component.scss'
 })
 
 
-export class ListUserComponent implements OnInit, AfterViewInit {
+export class ListTipoDespesaComponent implements OnInit, AfterViewInit {
   _liveAnnouncer = inject(LiveAnnouncer);
   dialog = inject(MatDialog);
   toastr = inject(ToastrService);
-  usuarioService = inject(UsuarioService);
+  tipoDespesaService = inject(TipoDespesaService);
   router = inject(Router);
 
-  formName: string = "Usuário";
+  formName: string = "Tipos de Despesa";
   buttonTooltip: string = "Cria um novo " + this.formName;
-  entityPage: string = "/user-form";
+  entityPage: string = "/tipo-despesa-form";
 
-  displayedColumns: string[] = ['id', 'nome', 'login', 'email', 'perfil', 'ativo', 'action'];
-  dataSource = new MatTableDataSource<IUsuario>();
+  displayedColumns: string[] = ['id', 'descricao', 'action'];
+  dataSource = new MatTableDataSource<ITipoDespesa>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -79,12 +79,13 @@ export class ListUserComponent implements OnInit, AfterViewInit {
   }
 
   loadData() {
-    this.usuarioService.getAll().subscribe(data => {
+    this.tipoDespesaService.getAll().subscribe(data => {
       this.dataSource.data = data;
     })
   }
 
   Edit(id: number) {
+console.log(`${this.entityPage}/${id}`) ;   
     this.router.navigateByUrl(`${this.entityPage}/${id}`);
   }
 
@@ -97,8 +98,8 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.usuarioService.delete(id).subscribe(() => {
-          this.toastr.success(this.formName + ' excluído com sucesso!');
+        this.tipoDespesaService.delete(id).subscribe(() => {
+          this.toastr.success(this.formName + ' excluída com sucesso!');
           this.loadData();
         },
         (error: any) => {
@@ -119,18 +120,6 @@ export class ListUserComponent implements OnInit, AfterViewInit {
 
   }
 
-  getProfile(profile: number) {
-    let profileDescription = "";
-
-    if (profile == 1) {
-      profileDescription = "Administrador";
-    }
-    else {
-      profileDescription = "Usuario";
-    }
-
-    return profileDescription;
-  }
 }
 
 
