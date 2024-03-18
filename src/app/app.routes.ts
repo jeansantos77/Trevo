@@ -18,128 +18,67 @@ import { ModeloFormComponent } from './pages/modelo/modelo-form/modelo-form.comp
 import { ListModeloComponent } from './pages/modelo/list-modelo/list-modelo.component';
 import { ListTipoDespesaComponent } from './pages/tipo-despesa/list-tipo-despesa/list-tipo-despesa.component';
 import { TipoDespesaFormComponent } from './pages/tipo-despesa/tipo-despesa-form/tipo-despesa-form.component';
+import { ListCatDespesaComponent } from './pages/categoria-despesa/list-cat-despesa/list-cat-despesa.component';
+import { CatDespesaFormComponent } from './pages/categoria-despesa/cat-despesa-form/cat-despesa-form.component';
+import { ListCatVeiculoComponent } from './pages/categoria-veiculo/list-cat-veiculo/list-cat-veiculo.component';
+import { CatVeiculoFormComponent } from './pages/categoria-veiculo/cat-veiculo-form/cat-veiculo-form.component';
+import { CombustivelFormComponent } from './pages/combustivel/combustivel-form/combustivel-form.component';
+import { ListCombustivelComponent } from './pages/combustivel/list-combustivel/list-combustivel.component';
+import { CorFormComponent } from './pages/cor/cor-form/cor-form.component';
+import { ListCorComponent } from './pages/cor/list-cor/list-cor.component';
+import { AcessorioFormComponent } from './pages/acessorio/acessorio-form/acessorio-form.component';
+import { ListAcessorioComponent } from './pages/acessorio/list-acessorio/list-acessorio.component';
+import { ListSitVeiculoComponent } from './pages/situacao-veiculo/list-sit-veiculo/list-sit-veiculo.component';
+import { SitVeiculoFormComponent } from './pages/situacao-veiculo/sit-veiculo-form/sit-veiculo-form.component';
+import { ListFormaPagtoComponent } from './pages/forma-pagto/list-forma-pagto/list-forma-pagto.component';
+import { FormaPagtoFormComponent } from './pages/forma-pagto/forma-pagto-form/forma-pagto-form.component';
 
 export const routes: Routes = [
-    { 
-        path: 'list-user', 
-        component: ListUserComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'user-form', 
-        component: UserFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'user-form/:id', 
-        component: UserFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'list-state', 
-        component: ListStateComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'state-form', 
-        component: StateFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'state-form/:id', 
-        component: StateFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'list-company', 
-        component: ListCompanyComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'company-form', 
-        component: CompanyFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'company-form/:id', 
-        component: CompanyFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'list-city', 
-        component: ListCityComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'city-form', 
-        component: CityFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'city-form/:id', 
-        component: CityFormComponent,
-        canActivate: [authGuard]
-    },    
-    { 
-        path: 'list-country', 
-        component: ListCountryComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'country-form', 
-        component: CountryFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'country-form/:id', 
-        component: CountryFormComponent,
-        canActivate: [authGuard]
-    },  
-    { 
-        path: 'list-marca', 
-        component: ListMarcaComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'marca-form', 
-        component: MarcaFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'marca-form/:id', 
-        component: MarcaFormComponent,
-        canActivate: [authGuard]
-    },   
-    { 
-        path: 'list-modelo', 
-        component: ListModeloComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'modelo-form', 
-        component: ModeloFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'modelo-form/:id', 
-        component: ModeloFormComponent,
-        canActivate: [authGuard]
-    },     
-    { 
-        path: 'list-tipo-despesa', 
-        component: ListTipoDespesaComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'tipo-despesa-form', 
-        component: TipoDespesaFormComponent,
-        canActivate: [authGuard]
-    },
-    { 
-        path: 'tipo-despesa-form/:id', 
-        component: TipoDespesaFormComponent,
-        canActivate: [authGuard]
-    },     
+    { path: 'list-user', component: ListUserComponent, canActivate: [authGuard]},
+    { path: 'user-form', component: UserFormComponent, canActivate: [authGuard]}, 
+    { path: 'user-form/:id', component: UserFormComponent, canActivate: [authGuard]},
+    { path: 'list-state', component: ListStateComponent, canActivate: [authGuard]},
+    { path: 'state-form', component: StateFormComponent, canActivate: [authGuard]},
+    { path: 'state-form/:id', component: StateFormComponent, canActivate: [authGuard]},
+    { path: 'list-company', component: ListCompanyComponent, canActivate: [authGuard]},
+    { path: 'company-form', component: CompanyFormComponent, canActivate: [authGuard]},
+    { path: 'company-form/:id', component: CompanyFormComponent, canActivate: [authGuard]},  
+    { path: 'list-city', component: ListCityComponent, canActivate: [authGuard]},
+    { path: 'city-form', component: CityFormComponent, canActivate: [authGuard]},
+    { path: 'city-form/:id', component: CityFormComponent, canActivate: [authGuard]},   
+    { path: 'list-country',  component: ListCountryComponent, canActivate: [authGuard]},
+    { path: 'country-form', component: CountryFormComponent, canActivate: [authGuard]},
+    { path: 'country-form/:id', component: CountryFormComponent, canActivate: [authGuard]},  
+    { path: 'list-marca', component: ListMarcaComponent, canActivate: [authGuard]},
+    { path: 'marca-form', component: MarcaFormComponent, canActivate: [authGuard]},
+    { path: 'marca-form/:id', component: MarcaFormComponent, canActivate: [authGuard]},   
+    { path: 'list-modelo', component: ListModeloComponent, canActivate: [authGuard]},
+    { path: 'modelo-form', component: ModeloFormComponent, canActivate: [authGuard]},
+    { path: 'modelo-form/:id', component: ModeloFormComponent, canActivate: [authGuard]},     
+    { path: 'list-tipo-despesa', component: ListTipoDespesaComponent, canActivate: [authGuard]},
+    { path: 'tipo-despesa-form', component: TipoDespesaFormComponent, canActivate: [authGuard]},
+    { path: 'tipo-despesa-form/:id', component: TipoDespesaFormComponent, canActivate: [authGuard]},   
+    { path: 'list-cat-despesa', component: ListCatDespesaComponent, canActivate: [authGuard]},
+    { path: 'cat-despesa-form', component: CatDespesaFormComponent, canActivate: [authGuard]},
+    { path: 'cat-despesa-form/:id', component: CatDespesaFormComponent, canActivate: [authGuard]},      
+    { path: 'list-cat-veiculo', component: ListCatVeiculoComponent, canActivate: [authGuard]},
+    { path: 'cat-veiculo-form', component: CatVeiculoFormComponent, canActivate: [authGuard]},
+    { path: 'cat-veiculo-form/:id', component: CatVeiculoFormComponent, canActivate: [authGuard]},      
+    { path: 'list-combustivel', component: ListCombustivelComponent, canActivate: [authGuard]},
+    { path: 'combustivel-form', component: CombustivelFormComponent, canActivate: [authGuard]},
+    { path: 'combustivel-form/:id', component: CombustivelFormComponent, canActivate: [authGuard]},  
+    { path: 'list-cor', component: ListCorComponent, canActivate: [authGuard]},
+    { path: 'cor-form', component: CorFormComponent, canActivate: [authGuard]},
+    { path: 'cor-form/:id', component: CorFormComponent, canActivate: [authGuard]}, 
+    { path: 'list-acessorio', component: ListAcessorioComponent, canActivate: [authGuard]},
+    { path: 'acessorio-form', component: AcessorioFormComponent, canActivate: [authGuard]},
+    { path: 'acessorio-form/:id', component: AcessorioFormComponent, canActivate: [authGuard]}, 
+    { path: 'list-sit-veiculo', component: ListSitVeiculoComponent, canActivate: [authGuard]},
+    { path: 'sit-veiculo-form', component: SitVeiculoFormComponent, canActivate: [authGuard]},
+    { path: 'sit-veiculo-form/:id', component: SitVeiculoFormComponent, canActivate: [authGuard]}, 
+    { path: 'list-forma-pagto', component: ListFormaPagtoComponent, canActivate: [authGuard]},
+    { path: 'forma-pagto-form', component: FormaPagtoFormComponent, canActivate: [authGuard]},
+    { path: 'forma-pagto-form/:id', component: FormaPagtoFormComponent, canActivate: [authGuard]}, 
     { 
         path: 'home', 
         component: HomeComponent,

@@ -1,8 +1,5 @@
-export interface IPais {
-    id: number;
+import { IBase } from "./base";
+
+export interface IPais extends IBase {
     nome: string;
-    criadoPor? : string;
-    criadoEm? : Date;
-    atualizadoPor? : string;
-    atualizadoEm? : Date;
 }
