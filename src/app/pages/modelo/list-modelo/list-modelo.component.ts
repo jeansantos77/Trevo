@@ -17,7 +17,7 @@ import { ModeloService } from '../../../services/modelo.service';
 import { IModelo } from '../../../interfaces/modelo';
 
 @Component({
-  selector: 'app-list-Modelo',
+  selector: 'app-list-modelo',
   standalone: true,
   imports: [
     MatTableModule,
@@ -31,8 +31,8 @@ import { IModelo } from '../../../interfaces/modelo';
     MatTooltipModule,
     RouterLink
   ],
-  templateUrl: './list-Modelo.component.html',
-  styleUrl: './list-Modelo.component.scss'
+  templateUrl: './list-modelo.component.html',
+  styleUrl: './list-modelo.component.scss'
 })
 
 
