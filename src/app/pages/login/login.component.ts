@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
     MatToolbarModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -61,7 +61,8 @@ export class LoginComponent implements OnInit {
           console.log(error);
           this.toastr.error(error.error || error.message);
         }
-      })
+        
+      });
   
     }
 

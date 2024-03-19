@@ -85,7 +85,6 @@ export class ListTipoDespesaComponent implements OnInit, AfterViewInit {
   }
 
   Edit(id: number) {
-console.log(`${this.entityPage}/${id}`) ;   
     this.router.navigateByUrl(`${this.entityPage}/${id}`);
   }
 
