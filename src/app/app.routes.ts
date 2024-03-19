@@ -32,6 +32,10 @@ import { ListSitVeiculoComponent } from './pages/situacao-veiculo/list-sit-veicu
 import { SitVeiculoFormComponent } from './pages/situacao-veiculo/sit-veiculo-form/sit-veiculo-form.component';
 import { ListFormaPagtoComponent } from './pages/forma-pagto/list-forma-pagto/list-forma-pagto.component';
 import { FormaPagtoFormComponent } from './pages/forma-pagto/forma-pagto-form/forma-pagto-form.component';
+import { FornecedorFormComponent } from './pages/fornecedor/fornecedor-form/fornecedor-form.component';
+import { ListFornecedorComponent } from './pages/fornecedor/list-fornecedor/list-fornecedor.component';
+import { VendedorFormComponent } from './pages/vendedor/vendedor-form/vendedor-form.component';
+import { ListVendedorComponent } from './pages/vendedor/list-vendedor/list-vendedor.component';
 
 export const routes: Routes = [
     { path: 'list-user', component: ListUserComponent, canActivate: [authGuard]},
@@ -76,9 +80,15 @@ export const routes: Routes = [
     { path: 'list-sit-veiculo', component: ListSitVeiculoComponent, canActivate: [authGuard]},
     { path: 'sit-veiculo-form', component: SitVeiculoFormComponent, canActivate: [authGuard]},
     { path: 'sit-veiculo-form/:id', component: SitVeiculoFormComponent, canActivate: [authGuard]}, 
+    { path: 'list-fornecedor', component: ListFornecedorComponent, canActivate: [authGuard]},
+    { path: 'fornecedor-form', component: FornecedorFormComponent, canActivate: [authGuard]},
+    { path: 'fornecedor-form/:id', component: FornecedorFormComponent, canActivate: [authGuard]}, 
     { path: 'list-forma-pagto', component: ListFormaPagtoComponent, canActivate: [authGuard]},
     { path: 'forma-pagto-form', component: FormaPagtoFormComponent, canActivate: [authGuard]},
     { path: 'forma-pagto-form/:id', component: FormaPagtoFormComponent, canActivate: [authGuard]}, 
+    { path: 'list-vendedor', component: ListVendedorComponent, canActivate: [authGuard]},
+    { path: 'vendedor-form', component: VendedorFormComponent, canActivate: [authGuard]},
+    { path: 'vendedor-form/:id', component: VendedorFormComponent, canActivate: [authGuard]}, 
     { 
         path: 'home', 
         component: HomeComponent,

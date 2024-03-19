@@ -31,17 +31,17 @@
             </ng-container>
   
             <ng-container matColumnDef="cnpj">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> CNPJ </th>
-              <td mat-cell *matCellDef="let element"> {{formatCnpj(element.cnpj) }} </td>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header [fxHide.lt-sm]="true" [fxHide.lt-md]="true"> CNPJ </th>
+              <td mat-cell *matCellDef="let element" [fxHide.lt-sm]="true" [fxHide.lt-md]="true"> {{formatCnpj(element.cnpj) }} </td>
             </ng-container>
   
             <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-              <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header [fxHide.lt-sm]="true" [fxHide.lt-md]="true"> Email </th>
+              <td mat-cell *matCellDef="let element" [fxHide.lt-sm]="true" [fxHide.lt-md]="true"> {{element.email}} </td>
             </ng-container>
   
-            <ng-container matColumnDef="telefone">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefone </th>
+            <ng-container matColumnDef="telefone" [fxHide.lt-sm]="true" [fxHide.lt-md]="true">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header [fxHide.lt-sm]="true" [fxHide.lt-md]="true"> Telefone </th>
               <td mat-cell *matCellDef="let element"> {{element.telefone}} </td>
             </ng-container>
   

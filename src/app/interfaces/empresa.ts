@@ -1,5 +1,6 @@
-export interface IEmpresa {
-    id: number;
+import { IBase } from "./base";
+
+export interface IEmpresa extends IBase{
     nome: string;
     email: string;
     telefone: string;
@@ -9,8 +10,4 @@ export interface IEmpresa {
     numero: string;
     bairro: string;
     cidadeId: number;
-    criadoPor? : string;
-    criadoEm? : Date;
-    atualizadoPor? : string;
-    atualizadoEm? : Date;
 }
