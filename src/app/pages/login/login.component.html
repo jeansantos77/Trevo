@@ -18,10 +18,17 @@
                         </mat-icon>
                 </mat-form-field>
                 <button mat-raised-button color="primary">Entrar</button>
-                <a href="#">Esqueci a senha</a>
-
+                <!--<a href="#">Esqueci a senha</a>-->
+                
             </form>
             
         </div>
+        @if (isLoading)
+        {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+        
+
     </mat-card>
+    
 </div>

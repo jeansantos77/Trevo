@@ -10,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-login',
@@ -25,11 +26,14 @@ import { ToastrService } from 'ngx-toastr';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressBarModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
+
 export class LoginComponent implements OnInit {
+  isLoading: boolean = false;
   authService = inject(AuthService)
   router = inject(Router)
   toastr = inject(ToastrService);
@@ -44,6 +48,8 @@ export class LoginComponent implements OnInit {
       login: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    console.log(this.isLoading)
   }
 
   togglePasswordVisibility(): void {
@@ -51,24 +57,22 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.form.valid)
-    {
+    if (this.form.valid) {
+      this.isLoading = true; 
+
       this.authService.login(this.form.value).subscribe({
         next: (res) => {
-          this.router.navigate(['/'])
+          this.router.navigate(['/']);
         },
         error: (error) => {
           console.log(error);
           this.toastr.error(error.error || error.message);
+        },
+        complete: () => {
+          this.isLoading = false; 
         }
-        
       });
-  
     }
-
-  }
-
-
-
+}
 
 }
