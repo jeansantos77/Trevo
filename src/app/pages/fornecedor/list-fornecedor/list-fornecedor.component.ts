@@ -47,7 +47,7 @@ export class ListFornecedorComponent implements OnInit, AfterViewInit {
   buttonTooltip: string = "Cria um novo " + this.formName;
   entityPage: string = "/fornecedor-form";
 
-  displayedColumns: string[] = ['id', 'nome', 'telefone', 'contato', 'action'];
+  displayedColumns: string[] = ['id', 'nome', 'telefone', 'contato', 'ativo', 'action'];
   dataSource = new MatTableDataSource<IFornecedor>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

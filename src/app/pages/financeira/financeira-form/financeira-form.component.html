@@ -6,10 +6,10 @@
             </mat-card-header>
             <mat-card-content>
                 <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
-                    fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap="25px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
                     fxLayoutGap.xs="0px">
 
-                    <div class="col" fxFlex="99" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="col" fxFlex="52" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Nome</label>
                         <mat-form-field appearance="outline">
                             <input matInput placeholder="Nome" formControlName="nome">
@@ -19,14 +19,7 @@
                         </mat-form-field>
                     </div>
 
-
-                </div>
-
-                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
-                    fxLayoutGap="20px" fxLayoutGap.lg="16px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
-                    fxLayoutGap.xs="0px">
-
-                    <div class="col" fxFlex="35" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="col" fxFlex="46" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Email</label>
                         <mat-form-field appearance="outline">
                             <input type="email" matInput placeholder="Email" formControlName="email">
@@ -38,72 +31,39 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="col" fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
+
+                </div>
+
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="19px" fxLayoutGap.lg="14px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="20" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Telefone</label>
                         <mat-form-field appearance="outline">
                             <input matInput placeholder="Telefone" formControlName="telefone" maxlength="50">
                         </mat-form-field>
                     </div>
 
-                    <div class="col" fxFlex="29" fxFlex.sm="100" fxFlex.xs="100">
-                        <label>Tipo de Pessoa</label>
-                        <mat-form-field appearance="outline">
-                            <mat-select formControlName="tipoPessoa" #tp (selectionChange)="onChange(tp.value)">
-                                @for (tipo of tipos; track tipo) {
-                                <mat-option [value]="tipo.value">{{ tipo.description }}</mat-option>
-                                }
-                            </mat-select>
-
-                            @if (entityForm.controls['tipoPessoa'].hasError('required')) {
-                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
-                            }
-
-                        </mat-form-field>
-                    </div>
-
-
-                </div>
-
-                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
-                    fxLayoutGap="27px" fxLayoutGap.lg="18px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
-                    fxLayoutGap.xs="0px">
-
-
-
-                    @if (isPJ)
-                    {
-                    <div class="col" fxFlex="35" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="col" fxFlex="20" fxFlex.sm="100" fxFlex.xs="100">
                         <label>CNPJ</label>
                         <mat-form-field appearance="outline">
                             <input matInput placeholder="CNPJ" formControlName="cnpj" maxlength="18"
                                 mask="00.000.000/0000-00">
                         </mat-form-field>
                     </div>
-                    } @else
-                    {
-                    <div class="col" fxFlex="35" fxFlex.sm="100" fxFlex.xs="100">
-                        <label>CPF</label>
-                        <mat-form-field appearance="outline">
-                            <input matInput placeholder="CPF" formControlName="cpf" maxlength="14"
-                                mask="000.000.000-00">
-                        </mat-form-field>
-                    </div>
-                    }
-
-
-                    <div class="col" fxFlex="62" fxFlex.sm="100" fxFlex.xs="100">
+                   
+                    <div class="col" fxFlex="57" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Contato</label>
                         <mat-form-field appearance="outline">
                             <input matInput placeholder="Contato" formControlName="contato" maxlength="50">
                         </mat-form-field>
                     </div>
 
-
-
                 </div>
 
                 <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
-                    fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap="19px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
                     fxLayoutGap.xs="0px">
 
                     <div class="col" fxFlex="15" fxFlex.sm="100" fxFlex.xs="100">
@@ -121,7 +81,7 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="col" fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="col" fxFlex="11" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Número</label>
                         <mat-form-field appearance="outline">
                             <input matInput placeholder="Número" formControlName="numero">
@@ -131,7 +91,7 @@
                 </div>
 
                 <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
-                    fxLayoutGap="20px" fxLayoutGap.lg="21px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap="19px" fxLayoutGap.lg="16px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
                     fxLayoutGap.xs="0px">
 
                     <div class="col" fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
@@ -141,7 +101,7 @@
                         </mat-form-field>
                     </div>
 
-                    <div class="col" fxFlex="40" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="col" fxFlex="41" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Complemento</label>
                         <mat-form-field appearance="outline">
                             <input matInput placeholder="Complemento" formControlName="complemento">
@@ -169,7 +129,7 @@
                     fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
                     fxLayoutGap.xs="0px">
 
-                    <div class="col" fxFlex="99" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="col" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
 
                         <label>Observação</label>
                         <mat-form-field appearance="outline">

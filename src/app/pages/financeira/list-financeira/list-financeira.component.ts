@@ -13,11 +13,11 @@ import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
-import { VendedorService } from '../../../services/vendedor.service';
-import { IVendedor } from '../../../interfaces/vendedor';
+import { FinanceiraService } from '../../../services/financeira.service';
+import { IFinanceira } from '../../../interfaces/financeira';
 
 @Component({
-  selector: 'app-list-vendedor',
+  selector: 'app-list-financeira',
   standalone: true,
   imports: [
     MatTableModule,
@@ -31,24 +31,24 @@ import { IVendedor } from '../../../interfaces/vendedor';
     MatTooltipModule,
     RouterLink
   ],
-  templateUrl: './list-vendedor.component.html',
-  styleUrl: './list-vendedor.component.scss'
+  templateUrl: './list-financeira.component.html',
+  styleUrl: './list-financeira.component.scss'
 })
 
 
-export class ListVendedorComponent implements OnInit, AfterViewInit {
+export class ListFinanceiraComponent implements OnInit, AfterViewInit {
   _liveAnnouncer = inject(LiveAnnouncer);
   dialog = inject(MatDialog);
   toastr = inject(ToastrService);
-  vendedorService = inject(VendedorService);
+  financeiraService = inject(FinanceiraService);
   router = inject(Router);
 
-  formName: string = "Vendedor";
+  formName: string = "Financeira";
   buttonTooltip: string = "Cria um novo " + this.formName;
-  entityPage: string = "/vendedor-form";
+  entityPage: string = "/financeira-form";
 
-  displayedColumns: string[] = ['id', 'nome', 'telefone', 'ativo', 'action'];
-  dataSource = new MatTableDataSource<IVendedor>();
+  displayedColumns: string[] = ['id', 'nome', 'telefone', 'contato', 'ativo', 'action'];
+  dataSource = new MatTableDataSource<IFinanceira>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -78,7 +78,7 @@ export class ListVendedorComponent implements OnInit, AfterViewInit {
   }
 
   loadData() {
-    this.vendedorService.getAll().subscribe(data => {
+    this.financeiraService.getAll().subscribe(data => {
       this.dataSource.data = data;
     })
   }
@@ -96,7 +96,7 @@ export class ListVendedorComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.vendedorService.delete(id).subscribe(() => {
+        this.financeiraService.delete(id).subscribe(() => {
           this.toastr.success(this.formName + ' excluída com sucesso!');
           this.loadData();
         },

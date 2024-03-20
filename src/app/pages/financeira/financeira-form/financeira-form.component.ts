@@ -11,17 +11,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
-import { FornecedorService } from '../../../services/fornecedor.service';
-import { IFornecedor } from '../../../interfaces/fornecedor';
+import { FinanceiraService } from '../../../services/financeira.service';
+import { IFinanceira } from '../../../interfaces/financeira';
 import { NgxMaskDirective } from 'ngx-mask';
 import { CidadeService } from '../../../services/cidade.service';
 import { map } from 'rxjs/operators';
 import { ICidade } from '../../../interfaces/cidade';
 
 @Component({
-  selector: 'app-fornecedor-form',
-  templateUrl: './fornecedor-form.component.html',
-  styleUrl: './fornecedor-form.component.scss',
+  selector: 'app-financeira-form',
+  templateUrl: './financeira-form.component.html',
+  styleUrl: './financeira-form.component.scss',
   standalone: true,
   imports: [
     MatInputModule,
@@ -37,28 +37,26 @@ import { ICidade } from '../../../interfaces/cidade';
     NgxMaskDirective
   ]
 })
-export class FornecedorFormComponent {
+export class FinanceiraFormComponent {
 
   private toastr = inject(ToastrService)
   private router = inject(Router)
   private route = inject(ActivatedRoute)
-  private fornecedorService = inject(FornecedorService);
+  private financeiraService = inject(FinanceiraService);
   private authService = inject(AuthService);
   private cidadeService = inject(CidadeService);
 
-  formName: string = "Fornecedor"
-  listPage: string = "/list-fornecedor"
+  formName: string = "Financeira"
+  listPage: string = "/list-financeira"
   requiredMessage: string = "Campo obrigatório"
 
   private fb = inject(FormBuilder);
   entityForm = this.fb.group({
     nome: [null, Validators.required],
-    tipoPessoa: ["PJ", Validators.required],
     email: [null, Validators.email],
     telefone: null,
     contato: null,
     cnpj: null,
-    cpf: null,
     cep: null, 
     logradouro: null, 
     numero: null,
@@ -74,17 +72,10 @@ export class FornecedorFormComponent {
 
   cities: ICidade[] = [];
 
-  tipos = [
-    { description: 'Pessoa Física', value: 'PF' },
-    { description: 'Pessoa Jurídica', value: 'PJ' }
-  ];
-
   situations = [
     { description: 'Ativo', value: true },
     { description: 'Inativo', value: false }
   ];
-
-  isPJ : boolean = true
 
   ngOnInit() {
 
@@ -97,16 +88,14 @@ export class FornecedorFormComponent {
     this.entityId = this.route.snapshot.params['id'];
 
     if (this.entityId) {
-      this.fornecedorService.getById(this.entityId).subscribe((data: any) => {
+      this.financeiraService.getById(this.entityId).subscribe((data: any) => {
 
         if (data != null) {
           this.entityForm.controls['nome'].setValue(data.nome);
-          this.entityForm.controls['tipoPessoa'].setValue(data.tipoPessoa);
           this.entityForm.controls['email'].setValue(data.email);
           this.entityForm.controls['telefone'].setValue(data.telefone);
           this.entityForm.controls['contato'].setValue(data.contato);
           this.entityForm.controls['cnpj'].setValue(data.cnpj);
-          this.entityForm.controls['cpf'].setValue(data.cpf);
           this.entityForm.controls['cep'].setValue(data.cep);
           this.entityForm.controls['logradouro'].setValue(data.logradouro);
           this.entityForm.controls['numero'].setValue(data.numero);
@@ -116,7 +105,6 @@ export class FornecedorFormComponent {
           this.entityForm.controls['obs'].setValue(data.obs);
           this.entityForm.controls['ativo'].setValue(data.ativo);
 
-          this.isPJ = data.tipoPessoa === "PJ";
         }
       },
         (error: any) => {
@@ -126,29 +114,19 @@ export class FornecedorFormComponent {
 
   }
 
-  onChange(value: string) {
-    if (value === 'PJ') {
-      this.isPJ = true;
-    } else {
-      this.isPJ = false;
-    }
-  }
-
   Save(): void {
 
     let userLogged = this.authService.getUserLogged();
 
     if (this.entityForm.valid) {
 
-      const entity: IFornecedor = {
+      const entity: IFinanceira = {
         id: this.entityId,
         nome: this.entityForm.value.nome!,
-        tipoPessoa: this.entityForm.value.tipoPessoa!,
         email: this.entityForm.value.email!,
         telefone: this.entityForm.value.telefone!,
         contato: this.entityForm.value.contato!,
         cnpj: this.entityForm.value.cnpj!,
-        cpf: this.entityForm.value.cpf!,
         cep: this.entityForm.value.cep!,
         logradouro: this.entityForm.value.logradouro!,
         numero: this.entityForm.value.numero!,
@@ -162,8 +140,8 @@ export class FornecedorFormComponent {
       }
 
       if (this.entityId > 0) {
-        this.fornecedorService.update(entity).subscribe(() => {
-          this.toastr.success(this.formName + ' alterado com sucesso!');
+        this.financeiraService.update(entity).subscribe(() => {
+          this.toastr.success(this.formName + ' alterada com sucesso!');
           this.redirectList();
         },
           (error: any) => {
@@ -174,8 +152,8 @@ export class FornecedorFormComponent {
         entity.criadoPor = userLogged;
         entity.criadoEm = new Date();
 
-        this.fornecedorService.add(entity).subscribe(() => {
-          this.toastr.success(this.formName + ' salvo com sucesso!');
+        this.financeiraService.add(entity).subscribe(() => {
+          this.toastr.success(this.formName + ' salva com sucesso!');
           this.redirectList();
         },
         (error: any) => {

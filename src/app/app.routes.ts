@@ -36,6 +36,8 @@ import { FornecedorFormComponent } from './pages/fornecedor/fornecedor-form/forn
 import { ListFornecedorComponent } from './pages/fornecedor/list-fornecedor/list-fornecedor.component';
 import { VendedorFormComponent } from './pages/vendedor/vendedor-form/vendedor-form.component';
 import { ListVendedorComponent } from './pages/vendedor/list-vendedor/list-vendedor.component';
+import { ListFinanceiraComponent } from './pages/financeira/list-financeira/list-financeira.component';
+import { FinanceiraFormComponent } from './pages/financeira/financeira-form/financeira-form.component';
 
 export const routes: Routes = [
     { path: 'list-user', component: ListUserComponent, canActivate: [authGuard]},
@@ -80,6 +82,9 @@ export const routes: Routes = [
     { path: 'list-sit-veiculo', component: ListSitVeiculoComponent, canActivate: [authGuard]},
     { path: 'sit-veiculo-form', component: SitVeiculoFormComponent, canActivate: [authGuard]},
     { path: 'sit-veiculo-form/:id', component: SitVeiculoFormComponent, canActivate: [authGuard]}, 
+    { path: 'list-financeira', component: ListFinanceiraComponent, canActivate: [authGuard]},
+    { path: 'financeira-form', component: FinanceiraFormComponent, canActivate: [authGuard]},
+    { path: 'financeira-form/:id', component: FinanceiraFormComponent, canActivate: [authGuard]}, 
     { path: 'list-fornecedor', component: ListFornecedorComponent, canActivate: [authGuard]},
     { path: 'fornecedor-form', component: FornecedorFormComponent, canActivate: [authGuard]},
     { path: 'fornecedor-form/:id', component: FornecedorFormComponent, canActivate: [authGuard]}, 

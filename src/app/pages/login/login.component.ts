@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
         error: (error) => {
           console.log(error);
           this.toastr.error(error.error || error.message);
+          this.isLoading = false; 
         },
         complete: () => {
           this.isLoading = false; 
