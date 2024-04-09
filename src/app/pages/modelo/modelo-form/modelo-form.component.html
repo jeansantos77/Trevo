@@ -9,18 +9,7 @@
             fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
   
             <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-              <label>Nome</label>
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Descrição" formControlName="descricao">
-                @if (entityForm.controls['descricao'].hasError('required')) {
-                <mat-error><strong>{{requiredMessage}}</strong></mat-error>
-                }
-              </mat-form-field>
-            </div>
-            
-
-            <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-              <label>País</label>
+              <label>Marca</label>
               <mat-form-field appearance="outline">
                   <mat-select formControlName="marcaId" placeholder="Marca">
                       @for (marca of marcas; track marca) {
@@ -34,6 +23,19 @@
 
               </mat-form-field>
           </div>
+
+            <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
+              <label>Nome</label>
+              <mat-form-field appearance="outline">
+                <input matInput placeholder="Descrição" formControlName="descricao">
+                @if (entityForm.controls['descricao'].hasError('required')) {
+                <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                }
+              </mat-form-field>
+            </div>
+            
+
+            
           </div>
   
         </mat-card-content>

@@ -1,0 +1,76 @@
+<div class="main-body">
+    <form [formGroup]="entityForm" novalidate (ngSubmit)="save()">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{formName}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="20px" fxLayoutGap.lg="19px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Marca</label>
+                        <mat-form-field>
+                            <mat-select formControlName="marcaId" (selectionChange)="carregarModelosPorMarca($event)">
+                                @for (marca of marcas; track marca) {
+                                <mat-option [value]="marca.id">{{ marca.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['marcaId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <label>Modelo</label>
+                        <mat-form-field>
+                            <mat-select formControlName="modeloId">
+                                @for (modelo of modelosPorMarca; track modelo) {
+                                <mat-option [value]="modelo.id">{{ modelo.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['modeloId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Cores</label>
+                    </div>
+                </div>
+
+              <div class="row">
+                    <div class="col" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" style="background-color: #F5F5F5; height: 280px; overflow-y: auto;">
+                        <ul>
+                            @for (cor of cores; track cor) {
+                                <li>
+                                <mat-checkbox color="primary" [value]="cor.id.toString()"  (change)="onCheckboxChange($event)" >{{ cor.descricao }}</mat-checkbox> 
+                                </li>
+                              } 
+                        </ul>
+                    </div>
+                </div>                
+
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button type="button" (click)="cancel()" tabindex="-1">Cancelar</button>
+                <button mat-raised-button color="primary" (click)="save()">Salvar</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>

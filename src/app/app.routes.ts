@@ -38,6 +38,8 @@ import { VendedorFormComponent } from './pages/vendedor/vendedor-form/vendedor-f
 import { ListVendedorComponent } from './pages/vendedor/list-vendedor/list-vendedor.component';
 import { ListFinanceiraComponent } from './pages/financeira/list-financeira/list-financeira.component';
 import { FinanceiraFormComponent } from './pages/financeira/financeira-form/financeira-form.component';
+import { ClienteFormComponent } from './pages/cliente/cliente-form/cliente-form.component';
+import { ListClienteComponent } from './pages/cliente/list-cliente/list-cliente.component';
 
 export const routes: Routes = [
     { path: 'list-user', component: ListUserComponent, canActivate: [authGuard]},
@@ -88,6 +90,10 @@ export const routes: Routes = [
     { path: 'list-fornecedor', component: ListFornecedorComponent, canActivate: [authGuard]},
     { path: 'fornecedor-form', component: FornecedorFormComponent, canActivate: [authGuard]},
     { path: 'fornecedor-form/:id', component: FornecedorFormComponent, canActivate: [authGuard]}, 
+    { path: 'list-cliente', component: ListClienteComponent, canActivate: [authGuard]},
+    { path: 'cliente-form', component: ClienteFormComponent, canActivate: [authGuard]},
+    { path: 'cliente-form/:id', component: ClienteFormComponent, canActivate: [authGuard]}, 
+
     { path: 'list-forma-pagto', component: ListFormaPagtoComponent, canActivate: [authGuard]},
     { path: 'forma-pagto-form', component: FormaPagtoFormComponent, canActivate: [authGuard]},
     { path: 'forma-pagto-form/:id', component: FormaPagtoFormComponent, canActivate: [authGuard]}, 
