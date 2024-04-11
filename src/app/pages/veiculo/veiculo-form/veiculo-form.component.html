@@ -1,0 +1,424 @@
+<div class="main-body">
+    <form [formGroup]="entityForm" novalidate (ngSubmit)="Save()">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{formName}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="24px" fxLayoutGap.lg="21px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="15" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Placa</label>
+                        <mat-form-field>
+                            <input matInput formControlName="placa" mask="AAA-0000">
+
+                            @if (entityForm.controls['placa'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col" fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Renavam</label>
+                        <mat-form-field>
+                            <input matInput formControlName="renavam" mask="00000000000">
+
+                            @if (entityForm.controls['renavam'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col" fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Fabricação</label>
+                        <mat-form-field>
+                            <input matInput formControlName="anoFabricacao" mask="0000"
+                                type="number">
+
+                            @if (entityForm.controls['anoFabricacao'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col" fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Modelo</label>
+                        <mat-form-field>
+                            <input matInput formControlName="anoModelo" mask="0000" type="number">
+
+                            @if (entityForm.controls['anoModelo'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+                        </mat-form-field>
+
+                    </div>
+
+
+                    <div class="col" fxFlex="5" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Portas</label>
+                        <mat-form-field>
+                            <input matInput formControlName="portas" mask="0" type="number" value="4" tabindex="-1">
+
+                            @if (entityForm.controls['portas'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col" fxFlex="20" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Motor</label>
+                        <mat-form-field>
+                            <input matInput formControlName="numeroMotor">
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="24px" fxLayoutGap.lg="19px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Marca</label>
+                        <mat-form-field>
+                            <mat-select formControlName="marcaId">
+                                @for (marca of marcas; track marca) {
+                                <mat-option [value]="marca.id">{{ marca.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['marcaId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col" fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Modelo</label>
+                        <mat-form-field>
+                            <mat-select formControlName="modeloId">
+                                @for (modelo of modelosPorMarca; track modelo) {
+                                <mat-option [value]="modelo.id">{{ modelo.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['modeloId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col" fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Versão</label>
+                        <mat-form-field>
+                            <mat-select formControlName="versaoId">
+                                @for (item of versoes; track item) {
+                                <mat-option [value]="item.id">{{ item.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['versaoId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col" fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Cor</label>
+                        <mat-form-field>
+                            <mat-select formControlName="corId">
+                                @for (item of cores; track item) {
+                                <mat-option [value]="item.id">{{ item.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['corId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="24px" fxLayoutGap.lg="19px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Câmbio</label>
+                        <mat-form-field>
+                            <mat-select formControlName="cambioId">
+                                @for (item of cambios; track item) {
+                                <mat-option [value]="item.id">{{ item.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['cambioId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col" fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Combustível</label>
+                        <mat-form-field>
+                            <mat-select formControlName="combustivelId">
+                                @for (item of modelos; track item) {
+                                <mat-option [value]="item.id">{{ item.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['combustivelId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col" fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Categoria</label>
+                        <mat-form-field>
+                            <mat-select formControlName="categoriaVeiculoId">
+                                @for (item of categorias; track item) {
+                                <mat-option [value]="item.id">{{ item.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['categoriaVeiculoId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+
+
+                    <div class="col" fxFlex="19" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Situação</label>
+                        <mat-form-field>
+                            <mat-select formControlName="situacaoVeiculoId">
+                                @for (item of situacoes; track item) {
+                                <mat-option [value]="item.id">{{ item.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                            @if (entityForm.controls['situacaoVeiculoId'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                    </div>
+
+
+                </div>
+
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="24px" fxLayoutGap.lg="19px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="36" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Chassi</label>
+                        <mat-form-field>
+                            <input matInput formControlName="chassi">
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col" fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Valor Venda</label>
+                        <mat-form-field>
+                            <input matInput currencyMask formControlName="valorVenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+                            <mat-icon style="color: gray" matSuffix>attach_money</mat-icon>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col" fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Valor Mínimo Venda</label>
+                        <mat-form-field>
+                            <input matInput currencyMask formControlName="valorMinimoVenda" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+                            <mat-icon style="color: gray" matSuffix>attach_money</mat-icon>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="24px" fxLayoutGap.lg="19px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="36" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Código FIPE</label>
+                        <mat-form-field>
+                            <input matInput formControlName="codigoFipe">
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col" fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Valor da FIPE na Entrada</label>
+                        <mat-form-field>
+                            <input matInput currencyMask formControlName="valorFipeEntrada" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+                            <mat-icon style="color: gray" matSuffix>attach_money</mat-icon>
+                        </mat-form-field>
+
+                    </div>
+
+                    <div class="col" fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
+                        <label>Valor Atual da FIPE</label>
+                        <mat-form-field>
+                            <input matInput currencyMask formControlName="valorFipeAtual" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+                            <mat-icon style="color: gray" matSuffix>attach_money</mat-icon>
+                        </mat-form-field>
+
+                    </div>
+
+                </div>
+
+                <div class="row" fxLayout="row wrap" fxLayout.lg="row wrap" fxLayout.md="row wrap" fxLayout.xs="column"
+                    fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px"
+                    fxLayoutGap.xs="0px">
+
+                    <div class="col" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+
+                        <label>Observação</label>
+                        <mat-form-field>
+                            <textarea matInput formControlName="obs"></textarea>
+                        </mat-form-field>
+
+
+                    </div>
+
+                </div>
+
+
+                <mat-tab-group class="example-stretched-tabs mat-elevation-z3">
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">photo_library</mat-icon>
+                            Fotos
+                        </ng-template>
+
+                        <div class="table-container" fxLayout="row">
+                            <button type="button" style="margin:20px" matTooltip="Adiciona uma nova foto"
+                                mat-raised-button (click)="addFoto()">
+                                <mat-icon>add</mat-icon>
+                                Nova
+                            </button>
+                        </div>
+                        <div class="table-container" fxLayout="column" fxLayoutAlign="center stretch">
+                            <table mat-table [dataSource]="dataSourceFoto" matSort>
+
+                                <ng-container matColumnDef="imagem">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Imagem </th>
+                                    <td mat-cell *matCellDef="let element"> <img [src]="element.path + element.nome"> </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="caminho">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Caminho </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.path}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="nome">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="descricao">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+                                </ng-container>                                
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef style="width: 15%;">Ação</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <button type="button" mat-icon-button matTooltip="Remover foto"
+                                            style="color: #FA8072" (click)="RemoveFoto(row)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsFoto"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsFoto;"></tr>
+                            </table>
+
+                            <br>
+
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon">currency_exchange</mat-icon>
+                            Despesas
+                        </ng-template>
+
+                        <div class="table-container" fxLayout="row">
+                            <button type="button" style="margin:20px" matTooltip="Adiciona uma nova despesa"
+                                mat-raised-button (click)="addDespesa()">
+                                <mat-icon>add</mat-icon>
+                                Nova
+                            </button>
+                        </div>
+
+
+                        <div class="table-container" fxLayout="column" fxLayoutAlign="center stretch">
+                            <table mat-table [dataSource]="dataSourceDespesa" matSort>
+
+                                <ng-container matColumnDef="tipo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Marca </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.tipo}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="valor">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.valor}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="data">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Cor </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.data}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef style="width: 15%;">Ação</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <button type="button" mat-icon-button matTooltip="Remove Despesa"
+                                            style="color: #FA8072" (click)="RemoveDespesa(row)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsDespesa"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsDespesa;"></tr>
+                            </table>
+
+                            <br>
+
+                        </div>
+
+
+                    </mat-tab>
+                    
+
+                </mat-tab-group>
+            </mat-card-content>
+            <mat-card-actions>
+                <button routerLink="{{listPage}}" mat-raised-button type="button">Cancelar</button>
+                <button mat-raised-button color="primary" type="submit">Salvar</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>

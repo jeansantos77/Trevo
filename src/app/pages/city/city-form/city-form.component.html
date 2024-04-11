@@ -10,7 +10,7 @@
   
             <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
               <label>Nome</label>
-              <mat-form-field appearance="outline">
+              <mat-form-field>
                 <input matInput placeholder="Nome" formControlName="nome">
                 @if (entityForm.controls['nome'].hasError('required')) {
                 <mat-error><strong>{{requiredMessage}}</strong></mat-error>
@@ -20,8 +20,8 @@
             
 
             <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
-              <label>País</label>
-              <mat-form-field appearance="outline">
+              <label>Estado</label>
+              <mat-form-field>
                   <mat-select formControlName="estadoId" placeholder="Estado">
                       @for (estado of estados; track estado) {
                       <mat-option [value]="estado.id">{{ estado.nome }}</mat-option>

@@ -11,7 +11,7 @@
 
                     <div class="col" fxFlex="99" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Nome</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input matInput placeholder="Nome" formControlName="nome">
                             @if (entityForm.controls['nome'].hasError('required')) {
                             <mat-error><strong>{{requiredMessage}}</strong></mat-error>
@@ -28,7 +28,7 @@
 
                     <div class="col" fxFlex="35" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Email</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input type="email" matInput placeholder="Email" formControlName="email">
 
                             @if (entityForm.controls['email'].hasError('email')) {
@@ -40,14 +40,14 @@
 
                     <div class="col" fxFlex="32" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Telefone</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input matInput placeholder="Telefone" formControlName="telefone" maxlength="50">
                         </mat-form-field>
                     </div>
 
                     <div class="col" fxFlex="29" fxFlex.sm="100" fxFlex.xs="100">
                         <label>CPF</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input matInput placeholder="CPF" formControlName="cpf" maxlength="14"
                                 mask="000.000.000-00">
                         </mat-form-field>
@@ -62,7 +62,7 @@
 
                     <div class="col" fxFlex="15" fxFlex.sm="100" fxFlex.xs="100">
                         <label>CEP</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input matInput placeholder="CEP" formControlName="cep" maxlength="9" mask="00000-000">
                         </mat-form-field>
                     </div>
@@ -70,14 +70,14 @@
 
                     <div class="col" fxFlex="71" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Logradouro</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input matInput placeholder="Logradouro" formControlName="logradouro">
                         </mat-form-field>
                     </div>
 
                     <div class="col" fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Número</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input matInput placeholder="Número" formControlName="numero">
                         </mat-form-field>
                     </div>
@@ -90,21 +90,21 @@
 
                     <div class="col" fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Bairro</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input matInput placeholder="Bairro" formControlName="bairro">
                         </mat-form-field>
                     </div>
 
                     <div class="col" fxFlex="40" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Complemento</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <input matInput placeholder="Complemento" formControlName="complemento">
                         </mat-form-field>
                     </div>
 
                     <div class="col" fxFlex="26" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Cidade</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <mat-select formControlName="cidadeId">
                                 @for (city of cities; track city) {
                                 <mat-option [value]="city.id">{{ city.nome }}</mat-option>
@@ -126,7 +126,7 @@
                     <div class="col" fxFlex="99" fxFlex.sm="100" fxFlex.xs="100">
 
                         <label>Observação</label>
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <textarea matInput formControlName="obs" placeholder="Observação"></textarea>
                         </mat-form-field>
 
@@ -145,7 +145,7 @@
                     <div class="col" fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Situação</label>
 
-                        <mat-form-field appearance="outline">
+                        <mat-form-field>
                             <mat-select value=1 formControlName="ativo">
 
                                 @for (situation of situations; track situation) {

@@ -10,7 +10,7 @@
   
             <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
               <label>Nome</label>
-              <mat-form-field appearance="outline">
+              <mat-form-field>
                 <input matInput placeholder="Nome" formControlName="nome">
                 @if (entityForm.controls['nome'].hasError('required')) {
                 <mat-error><strong>{{requiredMessage}}</strong></mat-error>
@@ -20,7 +20,7 @@
   
             <div class="col" fxFlex="10" fxFlex.sm="100" fxFlex.xs="100">
               <label>UF</label>
-              <mat-form-field appearance="outline">
+              <mat-form-field>
                 <input matInput placeholder="UF" formControlName="uf" [maxlength]="2" >
                 
                 @if (entityForm.controls['uf'].hasError('required')) {
@@ -31,7 +31,7 @@
 
             <div class="col" fxFlex="37" fxFlex.sm="100" fxFlex.xs="100">
               <label>País</label>
-              <mat-form-field appearance="outline">
+              <mat-form-field>
                   <mat-select formControlName="paisId" placeholder="País">
                       @for (pais of paises; track pais) {
                       <mat-option [value]="pais.id">{{ pais.nome }}</mat-option>

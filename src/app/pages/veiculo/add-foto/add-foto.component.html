@@ -1,0 +1,72 @@
+<div class="main-body">
+    <form [formGroup]="entityForm" novalidate (ngSubmit)="save()">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{formName}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+
+                <div class="row">
+                    <input type="file" class="file-input" [accept]="requiredFileType" (change)="onFileSelected($event)"
+                        #fileUpload>
+
+                    <div class="file-upload row" style="width: 98%">
+                        <mat-form-field>
+                            <mat-label>Selecione o Arquivo</mat-label>
+
+                            <input readonly="true" matInput formControlName="nome" value="Selecione a foto do veículo">
+
+                            @if (entityForm.controls['nome'].hasError('required')) {
+                            <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+
+                        </mat-form-field>
+                        <button mat-mini-fab color="primary" class="upload-btn" type="button"
+                            (click)="fileUpload.click()">
+                            <mat-icon>attach_file</mat-icon>
+                        </button>
+
+
+                    </div>
+
+                    <div class="row">
+
+                        @if (uploadProgress){
+                        <mat-progress-bar class="progress-bar" mode="determinate"
+                            [value]="uploadProgress"></mat-progress-bar>
+                        <mat-icon class="cancel-upload" (click)="cancelUpload()">delete_forever</mat-icon>
+                        }
+                    </div>
+
+                </div>
+
+                <div class="row" fxLayout="row wrap">
+
+                    <div class="col" fxFlex="100" fxLayoutAlign="center stretch">
+                        <div class="image-container" [style.width]="imageSize" [style.height]="imageSize">
+                            <img [src]="imageUrl" alt="Imagem selecionada">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+
+                    <mat-form-field>
+                        <mat-label>Descrição</mat-label>
+                        <input matInput formControlName="descricao">
+                        @if (entityForm.controls['descricao'].hasError('required')) {
+                        <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                        }
+                    </mat-form-field>
+
+                </div>
+
+
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button type="button" (click)="cancel()" tabindex="-1">Cancelar</button>
+                <button mat-raised-button color="primary">Salvar</button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>

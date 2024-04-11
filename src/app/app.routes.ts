@@ -40,6 +40,12 @@ import { ListFinanceiraComponent } from './pages/financeira/list-financeira/list
 import { FinanceiraFormComponent } from './pages/financeira/financeira-form/financeira-form.component';
 import { ClienteFormComponent } from './pages/cliente/cliente-form/cliente-form.component';
 import { ListClienteComponent } from './pages/cliente/list-cliente/list-cliente.component';
+import { CambioFormComponent } from './pages/cambio/cambio-form/cambio-form.component';
+import { ListCambioComponent } from './pages/cambio/list-cambio/list-cambio.component';
+import { VersaoFormComponent } from './pages/versao/versao-form/versao-form.component';
+import { ListVersaoComponent } from './pages/versao/list-versao/list-versao.component';
+import { VeiculoFormComponent } from './pages/veiculo/veiculo-form/veiculo-form.component';
+import { ListVeiculoComponent } from './pages/veiculo/list-veiculo/list-veiculo.component';
 
 export const routes: Routes = [
     { path: 'list-user', component: ListUserComponent, canActivate: [authGuard]},
@@ -75,6 +81,20 @@ export const routes: Routes = [
     { path: 'list-combustivel', component: ListCombustivelComponent, canActivate: [authGuard]},
     { path: 'combustivel-form', component: CombustivelFormComponent, canActivate: [authGuard]},
     { path: 'combustivel-form/:id', component: CombustivelFormComponent, canActivate: [authGuard]},  
+
+    { path: 'list-cambio', component: ListCambioComponent, canActivate: [authGuard]},
+    { path: 'cambio-form', component: CambioFormComponent, canActivate: [authGuard]},
+    { path: 'cambio-form/:id', component: CambioFormComponent, canActivate: [authGuard]}, 
+
+    { path: 'list-versao', component: ListVersaoComponent, canActivate: [authGuard]},
+    { path: 'versao-form', component: VersaoFormComponent, canActivate: [authGuard]},
+    { path: 'versao-form/:id', component: VersaoFormComponent, canActivate: [authGuard]}, 
+
+    { path: 'list-veiculo', component: ListVeiculoComponent, canActivate: [authGuard]},
+    { path: 'veiculo-form', component: VeiculoFormComponent, canActivate: [authGuard]},
+    { path: 'veiculo-form/:id', component: VeiculoFormComponent, canActivate: [authGuard]}, 
+
+
     { path: 'list-cor', component: ListCorComponent, canActivate: [authGuard]},
     { path: 'cor-form', component: CorFormComponent, canActivate: [authGuard]},
     { path: 'cor-form/:id', component: CorFormComponent, canActivate: [authGuard]}, 
@@ -116,7 +136,7 @@ export const routes: Routes = [
     }, 
     { 
         path: '**', 
-        redirectTo: 'list-user', 
+        redirectTo: 'home', 
         pathMatch: 'full'
     }, 
 ];

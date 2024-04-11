@@ -10,7 +10,7 @@
 
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Nome</label>
-            <mat-form-field appearance="outline">
+            <mat-form-field>
               <input matInput placeholder="Nome" formControlName="nome">
               @if (entityForm.controls['nome'].hasError('required')) {
               <mat-error><strong>{{requiredMessage}}</strong></mat-error>
@@ -20,7 +20,7 @@
 
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Email</label>
-            <mat-form-field appearance="outline">
+            <mat-form-field>
               <input type="email" matInput placeholder="Email" formControlName="email">
               @if (entityForm.controls['email'].hasError('required')) {
               <mat-error><strong>{{requiredMessage}}</strong></mat-error>
@@ -38,7 +38,7 @@
           fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Login</label>
-            <mat-form-field appearance="outline">
+            <mat-form-field>
               <input matInput placeholder="Login" formControlName="login">
               @if (entityForm.controls['login'].hasError('required')) {
               <mat-error><strong>{{requiredMessage}}</strong></mat-error>
@@ -48,7 +48,7 @@
 
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Senha</label>
-            <mat-form-field appearance="outline">
+            <mat-form-field>
 
               <input matInput type="{{ showPassword ? 'text' : 'password' }}" placeholder="Senha"
                 formControlName="senha">
@@ -69,7 +69,7 @@
           fxLayoutGap="20px" fxLayoutGap.lg="15px" fxLayoutGap.md="10px" fxLayoutGap.sm="0px" fxLayoutGap.xs="0px">
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Perfil</label>
-            <mat-form-field appearance="outline">
+            <mat-form-field>
               <mat-select formControlName="perfil">
                 @for (profile of profiles; track profile) {
                 <mat-option [value]="profile.value">{{ profile.name }}</mat-option>
@@ -86,7 +86,7 @@
           <div class="col" fxFlex="49" fxFlex.sm="100" fxFlex.xs="100">
             <label>Situação</label>
 
-            <mat-form-field appearance="outline">
+            <mat-form-field>
               <mat-select value=1 formControlName="ativo">
 
                 @for (situation of situations; track situation) {

@@ -1,0 +1,65 @@
+.main-body {
+    padding: 10px;
+    height: 100%;
+    
+    mat-form-field {
+      width: 100%;
+    }
+  }
+   
+  mat-card mat-card-header mat-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 20px;
+  }
+  
+  mat-card mat-card-actions button {
+    margin: 5px;
+    width: 80px;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .col {
+    flex: 1;
+    
+    label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #696969;
+      padding-bottom: 10px;
+      display: block;
+    }
+  }
+  
+  .col:last-child {
+    margin-right: 0;
+  }
+
+  .file-input {
+    display: none;
+  }
+
+.upload-btn {
+    margin: 10px 0px 20px 10px;
+}
+
+.progress-bar {
+    margin: 10px 10px 20px 0px;
+}
+
+.image-container {
+    width: 200px; 
+    height: 200px; 
+    overflow: hidden;
+    margin: 10px;
+  }
+  
+  .image-container img {
+    width: 100%; /* A imagem ocupará todo o espaço disponível dentro do quadrado */
+    height: 100%; /* A imagem ocupará todo o espaço disponível dentro do quadrado */
+    object-fit: cover; /* A imagem será ajustada dentro do quadrado mantendo sua proporção */
+  }

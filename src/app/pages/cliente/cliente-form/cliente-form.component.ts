@@ -210,9 +210,6 @@ export class ClienteFormComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-
-console.log(result)
-
         this.dataSource.data.push(result);
         this.dataSource._updateChangeSubscription();
       }
