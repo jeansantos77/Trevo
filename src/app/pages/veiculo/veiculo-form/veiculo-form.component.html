@@ -88,7 +88,7 @@
                     <div class="col" fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Marca</label>
                         <mat-form-field>
-                            <mat-select formControlName="marcaId">
+                            <mat-select formControlName="marcaId" (selectionChange)="carregarModelosPorMarca($event)">
                                 @for (marca of marcas; track marca) {
                                 <mat-option [value]="marca.id">{{ marca.descricao }}</mat-option>
                                 }
@@ -358,7 +358,7 @@
 
                         </div>
                     </mat-tab>
-                    <mat-tab>
+                    <!--<mat-tab>
                         <ng-template mat-tab-label>
                             <mat-icon class="example-tab-icon">currency_exchange</mat-icon>
                             Despesas
@@ -410,7 +410,7 @@
                         </div>
 
 
-                    </mat-tab>
+                    </mat-tab>-->
                     
 
                 </mat-tab-group>

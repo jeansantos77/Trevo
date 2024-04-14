@@ -22,7 +22,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { IModeloDesejado } from '../../../interfaces/modeloDesejado';
 import { DeleteConfirmationComponent } from '../../../shared/delete-confirmation/delete-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
-import { IDespesa } from '../../../interfaces/despesa';
 import { MarcaService } from '../../../services/marca.service';
 import { ModeloService } from '../../../services/modelo.service';
 import { CorService } from '../../../services/cor.service';
@@ -42,7 +41,6 @@ import { VeiculoService } from '../../../services/veiculo.service';
 import { ICategoriaVeiculo } from '../../../interfaces/categoriaVeiculo';
 import { CategoriaVeiculoService } from '../../../services/categoriaVeiculo.service';
 import { NgxCurrencyDirective } from "ngx-currency";
-import { AddDespesaComponent } from '../add-despesa/add-despesa.component';
 import { AddFotoComponent } from '../add-foto/add-foto.component';
 import { IFotoVeiculo } from '../../../interfaces/fotoVeiculo';
 
@@ -79,8 +77,6 @@ export class VeiculoFormComponent {
 
   dataSourceFoto = new MatTableDataSource<IFotoVeiculo>();
   displayedColumnsFoto: string[] = ['imagem', 'caminho', 'nome', 'descricao', 'action'];
-  dataSourceDespesa = new MatTableDataSource<IDespesa>();
-  displayedColumnsDespesa: string[] = ['tipo', 'valor', 'data', 'action'];
 
   private toastr = inject(ToastrService)
   private router = inject(Router)
@@ -139,15 +135,7 @@ export class VeiculoFormComponent {
   situacoes: ISituacaoVeiculo[] = [];
   categorias: ICategoriaVeiculo[] = [];
 
-  despesas: IDespesa[] = [
-    { id: 1, tipoDespesa: "Polimento", tipoDespesaId: 1, valor: 1000 },
-    { id: 2, tipoDespesa: "Higienização", tipoDespesaId: 1, valor: 1000 },
-    { id: 3, tipoDespesa: "Reparo", tipoDespesaId: 1, valor: 1000 },
-  ];
-
   ngOnInit() {
-
-    this.dataSourceDespesa.data = this.despesas;
 
     this.categoriaVeiculoService.getAll().pipe(
       map(categorias => categorias.map(categoria => ({ id: categoria.id, descricao: categoria.descricao })))
@@ -264,10 +252,7 @@ export class VeiculoFormComponent {
         atualizadoPor: userLogged,
         atualizadoEm: new Date()
       }
-      if (entity.anoModelo < entity.anoFabricacao) {
-        this.toastr.error('Ano do modelo não pode ser menor que o ano de fabricação', 'Erro de validação');
-        return;
-      }
+
       if (this.entityId > 0) {
         this.veiculoService.update(entity).subscribe(() => {
           this.toastr.success(this.formName + ' alterado com sucesso!');
@@ -295,21 +280,6 @@ export class VeiculoFormComponent {
 
   redirectList(): void {
     this.router.navigateByUrl(this.listPage);
-  }
-
-  addDespesa() {
-    const dialogRef = this.dialog.open(AddDespesaComponent, {
-      height: '688px',
-      width: '400px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.dataSourceDespesa.data.push(result);
-        this.dataSourceDespesa._updateChangeSubscription();
-      }
-    });
-
   }
 
   addFoto() {
@@ -348,22 +318,9 @@ export class VeiculoFormComponent {
     });
   }
 
-  RemoveDespesa(row: any): void {
-    const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
-      height: '180px',
-      width: '300px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const index = this.dataSourceDespesa.data.indexOf(row);
-
-        if (index > -1) {
-          this.dataSourceDespesa.data.splice(index, 1);
-          this.dataSourceDespesa._updateChangeSubscription();
-        }
-      }
-    });
+  carregarModelosPorMarca(event: any) {
+    const marcaId = event.value;
+    const modelosPorMarca = this.modelos.filter(modelo => modelo.marcaId === marcaId);
+    this.modelosPorMarca = modelosPorMarca;
   }
-
 }

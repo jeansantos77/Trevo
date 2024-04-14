@@ -41,7 +41,6 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 export class AddFotoComponent {
   imageUrl: string = "assets/foto_carro.jpg";
-  imageSize: string = '400px';
 
   @Input()
   requiredFileType: string | undefined;
@@ -52,10 +51,8 @@ export class AddFotoComponent {
   private fb = inject(FormBuilder);
   entityForm = this.fb.group({
     nome: ['', Validators.required],
-    descricao: null,
+    descricao: [null, Validators.required],
   });
-
-
 
   selectedFile: File | null = null;
 

@@ -204,7 +204,7 @@ export class ClienteFormComponent {
 
   addModel() { 
     const dialogRef = this.dialog.open(AddModeloComponent, {
-      height: '688px',
+      height: '788px',
       width: '400px'
     });
 

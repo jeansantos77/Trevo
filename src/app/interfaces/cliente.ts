@@ -1,6 +1,5 @@
 import { IBase } from "./base";
-import { ICor } from "./cor";
-import { IModelo } from "./modelo";
+import { IModeloDesejado } from "./modeloDesejado";
 
 export interface ICliente extends IBase {
     nome: string;
@@ -16,6 +15,5 @@ export interface ICliente extends IBase {
     telefone: string;
     email: string;
     obs?: string;
-    modelos?: IModelo[]
-    cores?: ICor[]
+    modelos?: IModeloDesejado[]
 }

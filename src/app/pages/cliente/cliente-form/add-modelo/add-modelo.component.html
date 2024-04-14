@@ -35,7 +35,7 @@
                     <div class="col">
                         <label>Modelo</label>
                         <mat-form-field>
-                            <mat-select formControlName="modeloId">
+                            <mat-select formControlName="modeloId" (selectionChange)="carregarVersoesPorModelo($event)">
                                 @for (modelo of modelosPorMarca; track modelo) {
                                 <mat-option [value]="modelo.id">{{ modelo.descricao }}</mat-option>
                                 }
@@ -48,6 +48,23 @@
                         </mat-form-field>
                     </div>
                 </div>
+
+                <div class="row">
+
+                    <div class="col">
+                        <label>Versão</label>
+                        <mat-form-field>
+                            <mat-select formControlName="versaoId">
+                                @for (versao of versoesPorModelo; track versao) {
+                                <mat-option [value]="versao.id">{{ versao.descricao }}</mat-option>
+                                }
+                            </mat-select>
+
+                        </mat-form-field>
+                    </div>
+                </div>
+
+
                 <div class="row">
                     <div class="col">
                         <label>Cores</label>
@@ -55,7 +72,7 @@
                 </div>
 
               <div class="row">
-                    <div class="col" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" style="background-color: #F5F5F5; height: 280px; overflow-y: auto;">
+                    <div class="col" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" style="background-color: #F5F5F5; height: 220px; overflow-y: auto;">
                         <ul>
                             @for (cor of cores; track cor) {
                                 <li>

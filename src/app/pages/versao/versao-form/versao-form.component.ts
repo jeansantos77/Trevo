@@ -13,6 +13,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
 import { IVersao } from '../../../interfaces/versao';
 import { VersaoService } from '../../../services/versao.service';
+import { IMarca } from '../../../interfaces/marca';
+import { IModelo } from '../../../interfaces/modelo';
+import { MarcaService } from '../../../services/marca.service';
+import { ModeloService } from '../../../services/modelo.service';
+import { map } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-versao-form',
@@ -37,8 +43,10 @@ export class VersaoFormComponent {
   private toastr = inject(ToastrService)
   private router = inject(Router)
   private route = inject(ActivatedRoute)
-  private VersaoService = inject(VersaoService);
+  private versaoService = inject(VersaoService);
   private authService = inject(AuthService);
+  private marcaService = inject(MarcaService);
+  private modeloService = inject(ModeloService);
 
   formName: string = "Versão"
   listPage: string = "/list-versao"
@@ -46,25 +54,96 @@ export class VersaoFormComponent {
 
   private fb = inject(FormBuilder);
   entityForm = this.fb.group({
+    marcaId: [null, Validators.required],
+    modeloId: [null, Validators.required],
     descricao: [null, Validators.required],
   });
 
   entityId!: number;
 
+  marcas: IMarca[] = [];
+  modelos: IModelo[] = [];
+  modelosPorMarca: IModelo[] = [];
+
+  rowData: any;
+
   ngOnInit() {
-    this.entityId = this.route.snapshot.params['id'];
 
-    if (this.entityId) {
-      this.VersaoService.getById(this.entityId).subscribe((data: any) => {
-
-        if (data != null) {
-          this.entityForm.controls['descricao'].setValue(data.descricao);
+    forkJoin([
+      this.marcaService.getAll().pipe(
+        map(marcas => marcas.map(marca => ({ id: marca.id, descricao: marca.descricao })))
+      ),
+      this.modeloService.getAll().pipe(
+        map(modelos => modelos.map(modelo => ({ id: modelo.id, descricao: modelo.descricao, marcaId: modelo.marcaId })))
+      )
+    ]).subscribe(([marcas, modelos]) => {
+      // Após o carregamento de todas as marcas e modelos
+      this.marcas = marcas;
+      this.modelos = modelos;
+    
+      // Recupere os dados da linha serializados da rota
+      this.route.params.subscribe(params => {
+        const data = params['rowData'];
+        // Desserialize os dados de volta para o objeto row
+        this.rowData = JSON.parse(data);
+    
+        // Verifique se os dados da linha estão disponíveis e carregue os modelos por marca
+        if (this.rowData) {
+          this.carregarModelosPorMarca(this.rowData.marcaId);
+    
+          this.entityId = this.rowData.id;
+          this.entityForm.controls['marcaId'].setValue(this.rowData.marcaId);
+          this.entityForm.controls['modeloId'].setValue(this.rowData.modeloId);
+          this.entityForm.controls['descricao'].setValue(this.rowData.descricao);
         }
-      },
-        (error: any) => {
-          this.toastr.error(error.error)
-        });
+      });
+    });
+
+
+
+
+    //this.entityId = this.route.snapshot.params['id'];
+/*
+    this.marcaService.getAll().pipe(
+      map(marcas => marcas.map(marca => ({ id: marca.id, descricao: marca.descricao })))
+    ).subscribe(marcas => {
+      this.marcas = marcas;
+    });
+
+    this.modeloService.getAll().pipe(
+      map(modelos => modelos.map(modelo => ({ id: modelo.id, descricao: modelo.descricao, marcaId: modelo.marcaId })))
+    ).subscribe(modelos => {
+      this.modelos = modelos;
+    });
+
+    // Recupere os dados da linha serializados da rota
+    this.route.params.subscribe(params => {
+      const data = params['rowData'];
+      // Desserialize os dados de volta para o objeto row
+      this.rowData = JSON.parse(data);
+    });
+
+    if (this.rowData) {
+      console.log(this.modelos)
+      this.carregarModelosPorMarca(this.rowData.marcaId)
+
+      this.entityForm.controls['marcaId'].setValue(this.rowData.marcaId);
+      this.entityForm.controls['modeloId'].setValue(this.rowData.modeloId);
+      this.entityForm.controls['descricao'].setValue(this.rowData.descricao);
     }
+
+    /* if (this.entityId) {
+       this.versaoService.getById(this.entityId).subscribe((data: any) => {
+ 
+         if (data != null) {
+           this.entityForm.controls['modeloId'].setValue(data.modeloId);
+           this.entityForm.controls['descricao'].setValue(data.descricao);
+         }
+       },
+         (error: any) => {
+           this.toastr.error(error.error)
+         });
+     }*/
 
   }
 
@@ -76,13 +155,14 @@ export class VersaoFormComponent {
 
       const entity: IVersao = {
         id: this.entityId,
+        modeloId: this.entityForm.value.modeloId!,
         descricao: this.entityForm.value.descricao!,
         atualizadoPor: userLogged,
         atualizadoEm: new Date()
       }
 
       if (this.entityId > 0) {
-        this.VersaoService.update(entity).subscribe(() => {
+        this.versaoService.update(entity).subscribe(() => {
           this.toastr.success(this.formName + ' alterada com sucesso!');
           this.redirectList();
         },
@@ -94,19 +174,26 @@ export class VersaoFormComponent {
         entity.criadoPor = userLogged;
         entity.criadoEm = new Date();
 
-        this.VersaoService.add(entity).subscribe(() => {
+        this.versaoService.add(entity).subscribe(() => {
           this.toastr.success(this.formName + ' salva com sucesso!');
           this.redirectList();
         },
-        (error: any) => {
-          this.toastr.error(error.error || error.message)
-        });
+          (error: any) => {
+            this.toastr.error(error.error || error.message)
+          });
       }
     }
   }
 
   redirectList(): void {
     this.router.navigateByUrl(this.listPage);
+  }
+
+  carregarModelosPorMarca(id: number) {
+
+    const modelosPorMarca = this.modelos.filter(modelo => modelo.marcaId === id);
+    this.modelosPorMarca = modelosPorMarca;
+    this.entityForm.controls['modeloId'].setValue(null);
   }
 
 }

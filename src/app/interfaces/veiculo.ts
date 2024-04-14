@@ -23,7 +23,6 @@ export interface IVeiculo extends IBase{
     valorFipeEntrada: number;
     valorFipeAtual: number;
     obs?: string;
-    despesas?: IDespesa[];
     fotos?: IFotoVeiculo[];
     
 }

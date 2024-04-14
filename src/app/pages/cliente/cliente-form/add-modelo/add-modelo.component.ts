@@ -20,6 +20,8 @@ import { ICor } from '../../../../interfaces/cor';
 import { IModelo } from '../../../../interfaces/modelo';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModeloService } from '../../../../services/modelo.service';
+import { IVersao } from '../../../../interfaces/versao';
+import { VersaoService } from '../../../../services/versao.service';
 
 @Component({
   selector: 'app-add-modelo',
@@ -48,6 +50,7 @@ export class AddModeloComponent {
 
   private marcaService = inject(MarcaService);
   private modeloService = inject(ModeloService);
+  private versaoService = inject(VersaoService);
   private corService = inject(CorService);
 
   entityId!: number;
@@ -59,6 +62,9 @@ export class AddModeloComponent {
   modelos: IModelo[] = [];
   modelosPorMarca: IModelo[] = [];
   modelosDesejados: IModeloDesejado[] = [];
+
+  versoes: IVersao[] = [];
+  versoesPorModelo: IVersao[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<AddModeloComponent>,
@@ -90,6 +96,12 @@ export class AddModeloComponent {
       this.modelos = modelos;
     });
 
+    this.versaoService.getAll().pipe(
+      map(versoes => versoes.map(versao => ({ id: versao.id, descricao: versao.descricao, modeloId: versao.modeloId })))
+    ).subscribe(versoes => {
+      this.versoes = versoes;
+    });
+
     this.corService.getAll().pipe(
       map(cores => cores.map(cor => ({ id: cor.id, descricao: cor.descricao })))
     ).subscribe(cores => {
@@ -110,10 +122,6 @@ console.log('save')
       this.entityForm.controls['modelo'].setValue(modeloSelecionado.descricao);
     }
 
-
-
-
-
     if (this.entityForm.valid) {
       this.dialogRef.close(this.entityForm.value);
     }
@@ -124,6 +132,12 @@ console.log('save')
     this.entityForm.controls['marca'].setValue(event.source.triggerValue);
     const modelosPorMarca = this.modelos.filter(modelo => modelo.marcaId === marcaId);
     this.modelosPorMarca = modelosPorMarca;
+  }
+
+  carregarVersoesPorModelo(event: any) {
+    const modeloId = event.value;
+    const versoesPorModelo = this.versoes.filter(versao => versao.modeloId === modeloId);
+    this.versoesPorModelo = versoesPorModelo;
   }
 
   onCheckboxChange (event: any) {

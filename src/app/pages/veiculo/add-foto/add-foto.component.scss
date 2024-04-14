@@ -52,14 +52,17 @@
 }
 
 .image-container {
-    width: 200px; 
-    height: 200px; 
-    overflow: hidden;
+    width: 600px; 
+    height: 400px; 
     margin: 10px;
+    background-color: #696969;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
   }
   
   .image-container img {
-    width: 100%; /* A imagem ocupará todo o espaço disponível dentro do quadrado */
-    height: 100%; /* A imagem ocupará todo o espaço disponível dentro do quadrado */
+    width: 100%; /* A imagem não será maior do que a largura da div */
+    height: 100%; /* A imagem não será maior do que a altura da div */
     object-fit: cover; /* A imagem será ajustada dentro do quadrado mantendo sua proporção */
   }

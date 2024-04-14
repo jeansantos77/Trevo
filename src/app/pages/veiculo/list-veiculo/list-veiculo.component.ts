@@ -47,7 +47,7 @@ export class ListVeiculoComponent implements OnInit, AfterViewInit {
   buttonTooltip: string = "Cria um novo " + this.formName;
   entityPage: string = "/veiculo-form";
 
-  displayedColumns: string[] = ['id', 'marca', 'modelo', 'versao', 'cor', 'ano', 'action'];
+  displayedColumns: string[] = ['placa', 'marca', 'modelo', 'versao', 'cor', 'ano', 'action'];
   dataSource = new MatTableDataSource<IVeiculo>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

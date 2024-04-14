@@ -13,8 +13,8 @@ import { Router, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from '../../../shared/delete-confirmation/delete-confirmation.component';
 import { ToastrService } from 'ngx-toastr';
-import { TipoDespesaService } from '../../../services/tipoDespesa.service';
-import { ITipoDespesa } from '../../../interfaces/tipoDespesa';
+import { VersaoService } from '../../../services/versao.service';
+import { IVersaoList } from '../../../interfaces/versao';
 
 @Component({
   selector: 'app-list-versao',
@@ -40,15 +40,15 @@ export class ListVersaoComponent implements OnInit, AfterViewInit {
   _liveAnnouncer = inject(LiveAnnouncer);
   dialog = inject(MatDialog);
   toastr = inject(ToastrService);
-  tipoDespesaService = inject(TipoDespesaService);
+  versaoService = inject(VersaoService);
   router = inject(Router);
 
   formName: string = "Versão";
   buttonTooltip: string = "Cria um novo " + this.formName;
   entityPage: string = "/versao-form";
 
-  displayedColumns: string[] = ['id', 'descricao', 'action'];
-  dataSource = new MatTableDataSource<ITipoDespesa>();
+  displayedColumns: string[] = ['id','marca', 'modelo', 'descricao', 'action'];
+  dataSource = new MatTableDataSource<IVersaoList>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -78,13 +78,17 @@ export class ListVersaoComponent implements OnInit, AfterViewInit {
   }
 
   loadData() {
-    this.tipoDespesaService.getAll().subscribe(data => {
+    this.versaoService.getList().subscribe(data => {
       this.dataSource.data = data;
     })
   }
 
-  Edit(id: number) {
-    this.router.navigateByUrl(`${this.entityPage}/${id}`);
+  Edit(row: any /*id: number*/) {
+  //  this.router.navigateByUrl(`${this.entityPage}/${id}`);
+
+    const data = JSON.stringify(row);
+    this.router.navigate([`${this.entityPage}`, { rowData: data }]);
+
   }
 
   openDeleteConfirmation(id: number): void {
@@ -96,7 +100,7 @@ export class ListVersaoComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.tipoDespesaService.delete(id).subscribe(() => {
+        this.versaoService.delete(id).subscribe(() => {
           this.toastr.success(this.formName + ' excluída com sucesso!');
           this.loadData();
         },

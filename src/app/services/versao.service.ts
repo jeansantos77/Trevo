@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { IVersao } from '../interfaces/versao';
+import { IVersao, IVersaoList } from '../interfaces/versao';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,10 @@ export class VersaoService {
 
   getAll() {
     return this.http.get<IVersao[]>(this.apiUrl + 'api/versao')
+  }
+
+  getList() {
+    return this.http.get<IVersaoList[]>(this.apiUrl + 'api/versao/getList')
   }
 
   getById(id: number) {
