@@ -22,6 +22,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ModeloService } from '../../../../services/modelo.service';
 import { IVersao } from '../../../../interfaces/versao';
 import { VersaoService } from '../../../../services/versao.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-modelo',
@@ -52,12 +53,12 @@ export class AddModeloComponent {
   private modeloService = inject(ModeloService);
   private versaoService = inject(VersaoService);
   private corService = inject(CorService);
+  private toastr = inject(ToastrService)
 
   entityId!: number;
 
   marcas: IMarca[] = [];
   cores: ICor[] = [];
-  coresSelecionadas: ICor[] = [];
 
   modelos: IModelo[] = [];
   modelosPorMarca: IModelo[] = [];
@@ -68,17 +69,21 @@ export class AddModeloComponent {
 
   constructor(
     private dialogRef: MatDialogRef<AddModeloComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder
   ) {
+
+    this.modelosDesejados = data.modelos;
 
     this.entityForm = this.fb.group({
       marcaId: [null, Validators.required],
       modeloId: [null, Validators.required],
+      versaoId: null,
       corId: [null, Validators.required],
       marca: null,
       modelo: null,
       cor: null,
-
+      versao: null
     });
 
   }
@@ -115,16 +120,30 @@ export class AddModeloComponent {
   }
 
   save(): void {
-console.log('save')
-    const modeloSelecionado = this.modelosPorMarca.find(modelo => modelo.id == this.entityForm.controls['modeloId'].value);
-    if (modeloSelecionado) {
-      console.log(modeloSelecionado)
-      this.entityForm.controls['modelo'].setValue(modeloSelecionado.descricao);
-    }
-
     if (this.entityForm.valid) {
+console.log(1)
+      const modeloId = this.entityForm.controls['modeloId'].value;
+      const versaoId = this.entityForm.controls['versaoId'].value;
+      const corId = this.entityForm.controls['corId'].value;
+      console.log(2)
+      if (this.modelosDesejados.some(item => item.modeloId === modeloId && item.versaoId === versaoId && item.corId === corId)) {
+        this.toastr.error("Modelo dejado já existe para essa cor.")
+        return;
+      }
+      console.log(this.versoes)
+      const selectedVersao:string | undefined = this.versoes.find(v => v.id === versaoId)?.descricao;
+      console.log(selectedVersao)
+
+      if (selectedVersao) {
+        this.entityForm.controls['versao'].setValue(selectedVersao);
+      }
+      console.log(4)
+      const selectedCor:string | undefined = this.cores.find(cor => cor.id === corId)?.descricao;
+      this.entityForm.controls['cor'].setValue(selectedCor);
+
       this.dialogRef.close(this.entityForm.value);
     }
+
   }
 
   carregarModelosPorMarca(event: any) {
@@ -136,23 +155,11 @@ console.log('save')
 
   carregarVersoesPorModelo(event: any) {
     const modeloId = event.value;
+    this.entityForm.controls['modelo'].setValue(event.source.triggerValue);
     const versoesPorModelo = this.versoes.filter(versao => versao.modeloId === modeloId);
     this.versoesPorModelo = versoesPorModelo;
   }
 
-  onCheckboxChange (event: any) {
-
-    if (event.checked) {
-      if (!this.coresSelecionadas.includes(event.source.value)) {
-        this.coresSelecionadas.push(event.source.value);
-      }
-    } else {
-      const index = this.coresSelecionadas.indexOf(event.source.value);
-      if (index !== -1) {
-        this.coresSelecionadas.splice(index, 1);
-      }
-    }
-
-  }
+  
 
 }

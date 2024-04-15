@@ -11,9 +11,9 @@ export interface ICliente extends IBase {
     complemento: string;
     bairro: string;
     cidadeId: number;
-    formaPagtoId: number;
+    formaPagamentoId: number;
     telefone: string;
     email: string;
     obs?: string;
-    modelos?: IModeloDesejado[]
+    modelosDesejados?: IModeloDesejado[]
 }

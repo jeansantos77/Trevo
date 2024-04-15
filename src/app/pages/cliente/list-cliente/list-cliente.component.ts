@@ -47,7 +47,7 @@ export class ListClienteComponent implements OnInit, AfterViewInit {
   buttonTooltip: string = "Cria um novo " + this.formName;
   entityPage: string = "/cliente-form";
 
-  displayedColumns: string[] = ['id', 'nome', 'telefone', 'contato', 'action'];
+  displayedColumns: string[] = ['id', 'nome', 'telefone', 'action'];
   dataSource = new MatTableDataSource<ICliente>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

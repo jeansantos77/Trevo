@@ -29,13 +29,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { IFormaPagto } from '../../../interfaces/formaPagto';
 import { FormaPagtoService } from '../../../services/formaPagto.service';
 import { AddModeloComponent } from './add-modelo/add-modelo.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-cliente-form',
   templateUrl: './cliente-form.component.html',
   styleUrl: './cliente-form.component.scss',
   standalone: true,
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), DatePipe],
   imports: [
     MatInputModule,
     MatButtonModule,
@@ -56,12 +57,12 @@ import { AddModeloComponent } from './add-modelo/add-modelo.component';
 })
 export class ClienteFormComponent {
 
-  constructor(private dateAdapter: DateAdapter<Date>) {
+  constructor(private dateAdapter: DateAdapter<Date>, private datePipe: DatePipe) {
     this.dateAdapter.setLocale('pt-BR');
   }
 
   dataSource = new MatTableDataSource<IModeloDesejado>();
-  displayedColumns: string[] = ['marca', 'modelo', 'cor', 'action'];
+  displayedColumns: string[] = ['marca', 'modelo', 'cor', 'versao', 'action'];
 
   private toastr = inject(ToastrService)
   private router = inject(Router)
@@ -78,18 +79,19 @@ export class ClienteFormComponent {
   private fb = inject(FormBuilder);
   entityForm = this.fb.group({
     nome: [null, Validators.required],
-    nascimento: [null, Validators.required],
+    nascimento: ['', Validators.required],
     email: [null, [Validators.required, Validators.email]],
     telefone: [null, Validators.required],
     cpf: [null, Validators.required],
     cep: [null, Validators.required],
     logradouro: [null, Validators.required],
     numero: [null, Validators.required],
-    complemento: [null, Validators.required],
+    complemento: null,
     bairro: [null, Validators.required],
     cidadeId: [null, Validators.required],
-    formaPagtoId: [null, Validators.required],
+    formaPagamentoId: [null, Validators.required],
     obs: null,
+    modelosDesejados: [[]]
   });
 
   entityId!: number;
@@ -97,16 +99,7 @@ export class ClienteFormComponent {
   cities: ICidade[] = [];
   formas: IFormaPagto[] = [];
 
-  modelos: IModeloDesejado[] = [
-    { marca: "CHEVROLET", modelo: "CRUZE", cor: "BRANCO", modeloId: 1, corId: 1, clienteId: 1 },
-    { marca: "CHEVROLET", modelo: "CRUZE", cor: "PRETO", modeloId: 1, corId: 2, clienteId: 1 },
-    { marca: "CHEVROLET", modelo: "CRUZE", cor: "CINZA", modeloId: 1, corId: 3, clienteId: 1 },
-  ];
-
   ngOnInit() {
-
-
-    this.dataSource.data = this.modelos;
 
     this.cidadeService.getAll().pipe(
       map(cities => cities.map(city => ({ id: city.id, nome: city.nome })))
@@ -127,7 +120,7 @@ export class ClienteFormComponent {
 
         if (data != null) {
           this.entityForm.controls['nome'].setValue(data.nome);
-          this.entityForm.controls['nascimento'].setValue(data.nascimento);
+          this.entityForm.controls['nascimento'].setValue(this.formatDate(data.nascimento));
           this.entityForm.controls['email'].setValue(data.email);
           this.entityForm.controls['telefone'].setValue(data.telefone);
           this.entityForm.controls['cpf'].setValue(data.cpf);
@@ -137,8 +130,14 @@ export class ClienteFormComponent {
           this.entityForm.controls['complemento'].setValue(data.complemento);
           this.entityForm.controls['bairro'].setValue(data.bairro);
           this.entityForm.controls['cidadeId'].setValue(data.cidadeId);
-          this.entityForm.controls['formaPagtoId'].setValue(data.formaPagtoId);
+          this.entityForm.controls['formaPagamentoId'].setValue(data.formaPagamentoId);
           this.entityForm.controls['obs'].setValue(data.obs);
+
+          this.entityForm.patchValue({
+            modelosDesejados: data.modelosDesejados
+          });
+
+          this.dataSource.data = data.modelosDesejados;
 
         }
       },
@@ -149,16 +148,22 @@ export class ClienteFormComponent {
 
   }
 
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
+  }
+
   Save(): void {
 
     let userLogged = this.authService.getUserLogged();
 
     if (this.entityForm.valid) {
-
+      console.log('data')
+      console.log(this.dataSource.data)
       const entity: ICliente = {
         id: this.entityId,
         nome: this.entityForm.value.nome!,
-        nascimento: this.entityForm.value.nascimento!,
+        nascimento: new Date(this.entityForm.value.nascimento!),
         email: this.entityForm.value.email!,
         telefone: this.entityForm.value.telefone!,
         cpf: this.entityForm.value.cpf!,
@@ -168,12 +173,14 @@ export class ClienteFormComponent {
         complemento: this.entityForm.value.complemento!,
         bairro: this.entityForm.value.bairro!,
         cidadeId: this.entityForm.value.cidadeId!,
-        formaPagtoId: this.entityForm.value.formaPagtoId!,
+        formaPagamentoId: this.entityForm.value.formaPagamentoId!,
+        modelosDesejados: this.dataSource.data,
         obs: this.entityForm.value.obs!,
         atualizadoPor: userLogged,
         atualizadoEm: new Date()
       }
-
+      console.log('entity')      
+console.log(entity)
       if (this.entityId > 0) {
         this.clienteService.update(entity).subscribe(() => {
           this.toastr.success(this.formName + ' alterado com sucesso!');
@@ -204,8 +211,9 @@ export class ClienteFormComponent {
 
   addModel() { 
     const dialogRef = this.dialog.open(AddModeloComponent, {
-      height: '788px',
-      width: '400px'
+      height: '590px',
+      width: '500px',
+      data: { modelos: this.dataSource.data }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -23,7 +23,7 @@
                     <div class="col" fxFlex="20" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Nascimento</label>
                         <mat-form-field>
-                            <input matInput placeholder="Nascimento" formControlName="nascimento" mask="d0/M0/0000">
+                            <input matInput placeholder="Nascimento" formControlName="nascimento" mask="d0/M0/0000" [dropSpecialCharacters]="false">
                             <mat-icon style="color: gray" matSuffix>event</mat-icon>
 
 
@@ -134,9 +134,6 @@
                         <label>Complemento</label>
                         <mat-form-field>
                             <input matInput placeholder="Complemento" formControlName="complemento">
-                            @if (entityForm.controls['complemento'].hasError('required')) {
-                                <mat-error><strong>{{requiredMessage}}</strong></mat-error>
-                            }
                         </mat-form-field>
                     </div>
 
@@ -159,13 +156,13 @@
                     <div class="col" fxFlex="25" fxFlex.sm="100" fxFlex.xs="100">
                         <label>Forma de Pagamento</label>
                         <mat-form-field>
-                            <mat-select formControlName="formaPagtoId">
+                            <mat-select formControlName="formaPagamentoId">
                                 @for (forma of formas; track forma) {
                                 <mat-option [value]="forma.id">{{ forma.descricao }}</mat-option>
                                 }
                             </mat-select>
 
-                            @if (entityForm.controls['formaPagtoId'].hasError('required')) {
+                            @if (entityForm.controls['formaPagamentoId'].hasError('required')) {
                             <mat-error><strong>{{requiredMessage}}</strong></mat-error>
                             }
 
@@ -218,6 +215,11 @@
                                 <ng-container matColumnDef="modelo">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Modelo </th>
                                     <td mat-cell *matCellDef="let element"> {{element.modelo}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="versao">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Versão </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.versao}} </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="cor">

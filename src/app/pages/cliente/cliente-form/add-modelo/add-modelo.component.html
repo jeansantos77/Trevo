@@ -64,24 +64,23 @@
                     </div>
                 </div>
 
-
                 <div class="row">
+
                     <div class="col">
-                        <label>Cores</label>
+                        <label>Cor</label>
+                        <mat-form-field>
+                            <mat-select formControlName="corId">
+                                @for (cor of cores; track cor) {
+                                <mat-option [value]="cor.id">{{ cor.descricao }}</mat-option>
+                                }
+                            </mat-select>
+                            @if (entityForm.controls['corId'].hasError('required')) {
+                                <mat-error><strong>{{requiredMessage}}</strong></mat-error>
+                            }
+                        </mat-form-field>
                     </div>
                 </div>
-
-              <div class="row">
-                    <div class="col" fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" style="background-color: #F5F5F5; height: 220px; overflow-y: auto;">
-                        <ul>
-                            @for (cor of cores; track cor) {
-                                <li>
-                                <mat-checkbox color="primary" [value]="cor.id.toString()"  (change)="onCheckboxChange($event)" >{{ cor.descricao }}</mat-checkbox> 
-                                </li>
-                              } 
-                        </ul>
-                    </div>
-                </div>                
+                            
 
             </mat-card-content>
             <mat-card-actions>

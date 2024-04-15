@@ -1,9 +1,10 @@
 export interface IModeloDesejado {
     id?: number;
     marca: string;
-    modelo: string;
-    cor: string;
     modeloId: number;
+    modelo: string;
+    versaoId: number;
+    versao: string;
     corId: number;
-    clienteId: number;
+    cor: string;
 }
