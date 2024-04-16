@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    console.log(this.isLoading)
   }
 
   togglePasswordVisibility(): void {
@@ -65,7 +64,6 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         },
         error: (error) => {
-          console.log(error);
           this.toastr.error(error.error || error.message);
           this.isLoading = false; 
         },

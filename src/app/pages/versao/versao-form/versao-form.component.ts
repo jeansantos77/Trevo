@@ -98,53 +98,6 @@ export class VersaoFormComponent {
         }
       });
     });
-
-
-
-
-    //this.entityId = this.route.snapshot.params['id'];
-/*
-    this.marcaService.getAll().pipe(
-      map(marcas => marcas.map(marca => ({ id: marca.id, descricao: marca.descricao })))
-    ).subscribe(marcas => {
-      this.marcas = marcas;
-    });
-
-    this.modeloService.getAll().pipe(
-      map(modelos => modelos.map(modelo => ({ id: modelo.id, descricao: modelo.descricao, marcaId: modelo.marcaId })))
-    ).subscribe(modelos => {
-      this.modelos = modelos;
-    });
-
-    // Recupere os dados da linha serializados da rota
-    this.route.params.subscribe(params => {
-      const data = params['rowData'];
-      // Desserialize os dados de volta para o objeto row
-      this.rowData = JSON.parse(data);
-    });
-
-    if (this.rowData) {
-      console.log(this.modelos)
-      this.carregarModelosPorMarca(this.rowData.marcaId)
-
-      this.entityForm.controls['marcaId'].setValue(this.rowData.marcaId);
-      this.entityForm.controls['modeloId'].setValue(this.rowData.modeloId);
-      this.entityForm.controls['descricao'].setValue(this.rowData.descricao);
-    }
-
-    /* if (this.entityId) {
-       this.versaoService.getById(this.entityId).subscribe((data: any) => {
- 
-         if (data != null) {
-           this.entityForm.controls['modeloId'].setValue(data.modeloId);
-           this.entityForm.controls['descricao'].setValue(data.descricao);
-         }
-       },
-         (error: any) => {
-           this.toastr.error(error.error)
-         });
-     }*/
-
   }
 
   Save(): void {
@@ -189,9 +142,9 @@ export class VersaoFormComponent {
     this.router.navigateByUrl(this.listPage);
   }
 
-  carregarModelosPorMarca(id: number) {
+  carregarModelosPorMarca(marcaId: number) {
 
-    const modelosPorMarca = this.modelos.filter(modelo => modelo.marcaId === id);
+    const modelosPorMarca = this.modelos.filter(modelo => modelo.marcaId === marcaId);
     this.modelosPorMarca = modelosPorMarca;
     this.entityForm.controls['modeloId'].setValue(null);
   }

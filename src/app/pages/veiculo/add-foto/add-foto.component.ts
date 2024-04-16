@@ -50,6 +50,7 @@ export class AddFotoComponent {
 
   private fb = inject(FormBuilder);
   entityForm = this.fb.group({
+    caminho: ['teste', Validators.required],
     nome: ['', Validators.required],
     descricao: [null, Validators.required],
   });
@@ -70,7 +71,7 @@ export class AddFotoComponent {
     if (fileList && fileList.length > 0) {
       this.selectedFile = fileList[0];
     }
-console.log(this.selectedFile)
+
     //const file:File = event.target.files[0];
 
     if (this.selectedFile) {

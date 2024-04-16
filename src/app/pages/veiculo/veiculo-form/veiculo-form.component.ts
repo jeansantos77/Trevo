@@ -43,6 +43,7 @@ import { CategoriaVeiculoService } from '../../../services/categoriaVeiculo.serv
 import { NgxCurrencyDirective } from "ngx-currency";
 import { AddFotoComponent } from '../add-foto/add-foto.component';
 import { IFotoVeiculo } from '../../../interfaces/fotoVeiculo';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-veiculo-form',
@@ -119,6 +120,7 @@ export class VeiculoFormComponent {
     valorFipeEntrada: 0,
     valorFipeAtual: 0,
     obs: null,
+    fotosVeiculo: []
   });
 
   entityId!: number;
@@ -130,6 +132,8 @@ export class VeiculoFormComponent {
   modelos: IModelo[] = [];
   modelosPorMarca: IModelo[] = [];
   versoes: IVersao[] = [];
+  versoesPorModelo: IVersao[] = [];
+
   combustiveis: ICombustivel[] = [];
   cambios: ICambio[] = [];
   situacoes: ISituacaoVeiculo[] = [];
@@ -137,87 +141,88 @@ export class VeiculoFormComponent {
 
   ngOnInit() {
 
-    this.categoriaVeiculoService.getAll().pipe(
-      map(categorias => categorias.map(categoria => ({ id: categoria.id, descricao: categoria.descricao })))
-    ).subscribe(categorias => {
+    forkJoin([
+      this.categoriaVeiculoService.getAll().pipe(
+        map(categorias => categorias.map(categoria => ({ id: categoria.id, descricao: categoria.descricao })))
+      ),
+      this.marcaService.getAll().pipe(
+        map(marcas => marcas.map(marca => ({ id: marca.id, descricao: marca.descricao })))
+      ),
+      this.modeloService.getAll().pipe(
+        map(modelos => modelos.map(modelo => ({ id: modelo.id, descricao: modelo.descricao, marcaId: modelo.marcaId })))
+      ),
+      this.corService.getAll().pipe(
+        map(cores => cores.map(cor => ({ id: cor.id, descricao: cor.descricao })))
+      ),
+      this.versaoService.getAll().pipe(
+        map(versoes => versoes.map(versao => ({ id: versao.id, descricao: versao.descricao, modeloId: versao.modeloId })))
+      ),
+      this.combustivelService.getAll().pipe(
+        map(combustiveis => combustiveis.map(combustivel => ({ id: combustivel.id, descricao: combustivel.descricao })))
+      ),
+      this.cambioService.getAll().pipe(
+        map(cambios => cambios.map(cambio => ({ id: cambio.id, descricao: cambio.descricao })))
+      ),
+      this.situacaoVeiculoService.getAll().pipe(
+        map(situacoes => situacoes.map(situacao => ({ id: situacao.id, descricao: situacao.descricao })))
+      )
+    ]).subscribe(([categorias, marcas, modelos, cores, versoes, combustiveis, cambios, situacoes]) => {
       this.categorias = categorias;
-    });
-
-    this.marcaService.getAll().pipe(
-      map(marcas => marcas.map(marca => ({ id: marca.id, descricao: marca.descricao })))
-    ).subscribe(marcas => {
       this.marcas = marcas;
-    });
-
-    this.modeloService.getAll().pipe(
-      map(modelos => modelos.map(modelo => ({ id: modelo.id, descricao: modelo.descricao, marcaId: modelo.marcaId })))
-    ).subscribe(modelos => {
       this.modelos = modelos;
-    });
-
-    this.corService.getAll().pipe(
-      map(cores => cores.map(cor => ({ id: cor.id, descricao: cor.descricao })))
-    ).subscribe(cores => {
       this.cores = cores;
-    });
-
-    this.versaoService.getAll().pipe(
-      map(versoes => versoes.map(versao => ({ id: versao.id, descricao: versao.descricao })))
-    ).subscribe(versoes => {
       this.versoes = versoes;
-    });
-
-    this.combustivelService.getAll().pipe(
-      map(combustiveis => combustiveis.map(combustivel => ({ id: combustivel.id, descricao: combustivel.descricao })))
-    ).subscribe(combustiveis => {
       this.combustiveis = combustiveis;
-    });
-
-    this.cambioService.getAll().pipe(
-      map(cambios => cambios.map(cambio => ({ id: cambio.id, descricao: cambio.descricao })))
-    ).subscribe(cambios => {
       this.cambios = cambios;
-    });
-
-    this.situacaoVeiculoService.getAll().pipe(
-      map(situacoes => situacoes.map(situacao => ({ id: situacao.id, descricao: situacao.descricao })))
-    ).subscribe(situacoes => {
       this.situacoes = situacoes;
+
+      this.entityId = this.route.snapshot.params['id'];
+
+      if (this.entityId) {
+        this.veiculoService.getById(this.entityId).subscribe((data: any) => {
+
+          if (data != null) {
+
+            this.carregarModelosPorMarca(data.marcaId)
+            this.carregarVersoesPorModelo(data.modeloId)
+
+            this.entityForm.controls['placa'].setValue(data.placa);
+            this.entityForm.controls['renavam'].setValue(data.renavam);
+            this.entityForm.controls['anoFabricacao'].setValue(data.anoFabricacao);
+            this.entityForm.controls['anoModelo'].setValue(data.anoModelo);
+            this.entityForm.controls['portas'].setValue(data.portas);
+            this.entityForm.controls['numeroMotor'].setValue(data.numeroMotor);
+            this.entityForm.controls['chassi'].setValue(data.chassi);
+            this.entityForm.controls['categoriaVeiculoId'].setValue(data.categoriaVeiculoId);
+            this.entityForm.controls['marcaId'].setValue(data.marcaId);
+            this.entityForm.controls['modeloId'].setValue(data.modeloId);
+            this.entityForm.controls['corId'].setValue(data.corId);
+            this.entityForm.controls['versaoId'].setValue(data.versaoId);
+            this.entityForm.controls['combustivelId'].setValue(data.combustivelId);
+            this.entityForm.controls['cambioId'].setValue(data.cambioId);
+            this.entityForm.controls['situacaoVeiculoId'].setValue(data.situacaoVeiculoId);
+            this.entityForm.controls['valorVenda'].setValue(data.valorVenda);
+            this.entityForm.controls['valorMinimoVenda'].setValue(data.valorMinimoVenda);
+            this.entityForm.controls['codigoFipe'].setValue(data.codigoFipe);
+            this.entityForm.controls['valorFipeEntrada'].setValue(data.valorFipeEntrada);
+            this.entityForm.controls['valorFipeAtual'].setValue(data.valorFipeAtual);
+            this.entityForm.controls['obs'].setValue(data.obs);
+
+            this.entityForm.patchValue({
+              fotosVeiculo: data.fotosVeiculo
+            });
+  
+            this.dataSourceFoto.data = data.fotosVeiculo;
+  
+          }
+        },
+          (error: any) => {
+            this.toastr.error(error.error)
+          });
+      }
     });
 
-    this.entityId = this.route.snapshot.params['id'];
 
-    if (this.entityId) {
-      this.veiculoService.getById(this.entityId).subscribe((data: any) => {
-
-        if (data != null) {
-          this.entityForm.controls['placa'].setValue(data.placa);
-          this.entityForm.controls['renavam'].setValue(data.renavam);
-          this.entityForm.controls['anoFabricacao'].setValue(data.anoFabricacao);
-          this.entityForm.controls['anoModelo'].setValue(data.anoModelo);
-          this.entityForm.controls['portas'].setValue(data.portas);
-          this.entityForm.controls['numeroMotor'].setValue(data.numeroMotor);
-          this.entityForm.controls['chassi'].setValue(data.chassi);
-          this.entityForm.controls['categoriaVeiculoId'].setValue(data.categoriaVeiculoId);
-          this.entityForm.controls['modeloId'].setValue(data.modeloId);
-          this.entityForm.controls['corId'].setValue(data.corId);
-          this.entityForm.controls['versaoId'].setValue(data.versaoId);
-          this.entityForm.controls['combustivelId'].setValue(data.combustivelId);
-          this.entityForm.controls['cambioId'].setValue(data.cambioId);
-          this.entityForm.controls['situacaoVeiculoId'].setValue(data.situacaoVeiculoId);
-          this.entityForm.controls['valorVenda'].setValue(data.valorVenda);
-          this.entityForm.controls['valorMinimoVenda'].setValue(data.valorMinimoVenda);
-          this.entityForm.controls['codigoFipe'].setValue(data.codigoFipe);
-          this.entityForm.controls['valorFipeEntrada'].setValue(data.valorFipeEntrada);
-          this.entityForm.controls['valorFipeAtual'].setValue(data.valorFipeAtual);
-          this.entityForm.controls['obs'].setValue(data.obs);
-
-        }
-      },
-        (error: any) => {
-          this.toastr.error(error.error)
-        });
-    }
 
   }
 
@@ -249,6 +254,7 @@ export class VeiculoFormComponent {
         valorFipeEntrada: this.entityForm.value.valorFipeEntrada!,
         valorFipeAtual: this.entityForm.value.valorFipeAtual!,
         obs: this.entityForm.value.obs!,
+        fotosVeiculo: this.dataSourceFoto.data,
         atualizadoPor: userLogged,
         atualizadoEm: new Date()
       }
@@ -290,7 +296,6 @@ export class VeiculoFormComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result)
         this.dataSourceFoto.data.push(result);
         this.dataSourceFoto._updateChangeSubscription();
       }
@@ -318,9 +323,15 @@ export class VeiculoFormComponent {
     });
   }
 
-  carregarModelosPorMarca(event: any) {
-    const marcaId = event.value;
+  carregarModelosPorMarca(marcaId: number) {
     const modelosPorMarca = this.modelos.filter(modelo => modelo.marcaId === marcaId);
     this.modelosPorMarca = modelosPorMarca;
+    this.entityForm.controls['modeloId'].setValue(null);
+  }
+
+  carregarVersoesPorModelo(modeloId: number) {
+    const versoesPorModelo = this.versoes.filter(versao => versao.modeloId === modeloId);
+    this.versoesPorModelo = versoesPorModelo;
+    this.entityForm.controls['versaoId'].setValue(null);
   }
 }

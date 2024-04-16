@@ -121,23 +121,22 @@ export class AddModeloComponent {
 
   save(): void {
     if (this.entityForm.valid) {
-console.log(1)
+
       const modeloId = this.entityForm.controls['modeloId'].value;
       const versaoId = this.entityForm.controls['versaoId'].value;
       const corId = this.entityForm.controls['corId'].value;
-      console.log(2)
+
       if (this.modelosDesejados.some(item => item.modeloId === modeloId && item.versaoId === versaoId && item.corId === corId)) {
         this.toastr.error("Modelo dejado já existe para essa cor.")
         return;
       }
-      console.log(this.versoes)
+
       const selectedVersao:string | undefined = this.versoes.find(v => v.id === versaoId)?.descricao;
-      console.log(selectedVersao)
 
       if (selectedVersao) {
         this.entityForm.controls['versao'].setValue(selectedVersao);
       }
-      console.log(4)
+
       const selectedCor:string | undefined = this.cores.find(cor => cor.id === corId)?.descricao;
       this.entityForm.controls['cor'].setValue(selectedCor);
 

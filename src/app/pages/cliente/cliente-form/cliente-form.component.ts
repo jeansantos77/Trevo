@@ -158,8 +158,7 @@ export class ClienteFormComponent {
     let userLogged = this.authService.getUserLogged();
 
     if (this.entityForm.valid) {
-      console.log('data')
-      console.log(this.dataSource.data)
+
       const entity: ICliente = {
         id: this.entityId,
         nome: this.entityForm.value.nome!,
@@ -179,8 +178,7 @@ export class ClienteFormComponent {
         atualizadoPor: userLogged,
         atualizadoEm: new Date()
       }
-      console.log('entity')      
-console.log(entity)
+
       if (this.entityId > 0) {
         this.clienteService.update(entity).subscribe(() => {
           this.toastr.success(this.formName + ' alterado com sucesso!');
